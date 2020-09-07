@@ -6,11 +6,11 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 15:16:29 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/08/26 21:45:49 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/09/05 15:04:47 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_ls.h"
+#include "ls.h"
 
 bool			check_alpha(t_argvs *current)
 {
@@ -43,7 +43,7 @@ bool			check_time_r(t_argvs *current)
 bool			ft_swap(t_ls *doll, t_argvs *current)
 {
 	t_data			tmp;
-	int				tmp_total;
+	// int				tmp_total;
 	char			*tmp_name;
 	char			*tmp_path;
 
@@ -51,17 +51,17 @@ bool			ft_swap(t_ls *doll, t_argvs *current)
 	if (doll->ft_sort(current))
 	{
 		// printf("test4\n");
-		tmp_total = current->total;
+		// tmp_total = current->total;
 		tmp_path = current->path;
 		tmp_name = current->name;
 		tmp = current->info;
 
-		current->total = current->next->total;
+		// current->total = current->next->total;
 		current->path = current->next->path;
 		current->name = current->next->name;
 		current->info = current->next->info;
 		
-		current->next->total = tmp_total;
+		// current->next->total = tmp_total;
 		current->next->path = tmp_path;
 		current->next->name = tmp_name;
 		current->next->info = tmp;
@@ -109,66 +109,72 @@ void				flags_sort(t_ls *doll)
 	ft_sorting(doll, doll->info_av);
 }
 
-static t_argvs			*initiate_argvs(void)
-{
-	t_argvs		*argvv;
-
-	if (!(argvv = (t_argvs*)malloc(sizeof(t_argvs))))
-		return(NULL);
-	ft_memset(argvv, 0, sizeof(argvv));
-	argvv->next = NULL;
-	// printf("test_entry2\n");
-	return(argvv);
-}
-
-void				ft_get_content_dir(t_ls *doll)//it's one chain for all directories so sorting do for all files
+void				ft_get_content_dir(t_ls *dolly, t_ls *doll)
 {
 	t_argvs			*tmp_con;
 	t_argvs			*tmp_content;
-	
-	while (doll->info_av)
+
+	doll->dirc = opendir(doll->info_av->path);
+	if (doll->ac > 2)
+		ft_printf("%s:\n", doll->info_av->path);
+	if (!doll->dirc)
 	{
-		doll->dirc = opendir(doll->info_av->path);
-		printf("opendir = %s\n", doll->info_av->path);
-		if (!doll->dirc)
-		{
-			perror("dir_open_error");
-			exit(1);
-		}
-		while ((doll->entry = readdir(doll->dirc)))
-		{
-			// printf("test_entry\n");
-			if (!(tmp_content = initiate_argvs()))
-				ls_error(0);
-			get_path_name(tmp_content, doll->info_av->path, doll->entry->d_name);
-			if (!doll->content_av)
-				doll->content_av = tmp_content;
-			else
-				tmp_con->next = tmp_content;
-			tmp_con = tmp_content;
-		}
-		// 	ft_printf("%s  ", doll->entry->d_name);
-		// ft_printf("\n");
-		closedir(doll->dirc);
-		doll->info_av = doll->info_av->next;
+		perror("dir_open_error");
+		exit(1);
 	}
+	while ((doll->entry = readdir(doll->dirc)))
+	{
+		if (!(tmp_content = initiate_argvs()))
+			ls_error(0);
+		get_path_name(tmp_content, doll->info_av->path, doll->entry->d_name);
+		if (!dolly->info_av)
+			dolly->info_av = tmp_content;
+		else
+			tmp_con->next = tmp_content;
+		tmp_con = tmp_content;
+	}
+	closedir(doll->dirc);
 }
 
-void				ft_print_content(t_ls *doll)
+void				ft_print_content(t_ls *dolly, t_ls *doll)//-a -l -R
 {
-	while (doll->content_av)
+	while (dolly->info_av)
 	{
-		ft_sorting(doll, doll->content_av);
-		ft_printf("%s  ", doll->content_av->name);
-		ft_printf("\n");
-		doll->content_av = doll->content_av->next;
+		ft_sorting(dolly, dolly->info_av);
+		if (!doll->optns.l && !doll->optns.R)
+		{
+			if (dolly->info_av->name[0] == '.' && doll->optns.a == 1)
+				ft_printf("%s  ", dolly->info_av->name);
+			else if (dolly->info_av->name[0] != '.')
+				ft_printf("%s  ", dolly->info_av->name);
+		}
+		// else if (doll->optns.l)
+		// {
+		// 	ft_printf("a");
+		// }
+		dolly->info_av = dolly->info_av->next;
 	}
+	ft_printf("\n");
 }
 
 void			display_ls(t_ls *doll)
 {
 	// printf("test1\n");
+	t_ls		*dolly;
+	
+	dolly = initiate(doll->ac, doll->av);
 	flags_sort(doll);
-	ft_get_content_dir(doll);
-	ft_print_content(doll);
+	dolly->ft_sort = doll->ft_sort;
+	while (doll->info_av)
+	{
+		ft_get_content_dir(dolly, doll);
+		ft_ls(dolly);
+		if (doll->optns.l)
+			ft_printf("total %i\n", dolly->info_av->total);
+		ft_print_content(dolly, doll);
+		free_list(dolly->info_av);
+		doll->info_av = doll->info_av->next;
+		if (doll->info_av != NULL)
+			ft_printf("\n");
+	}
 }

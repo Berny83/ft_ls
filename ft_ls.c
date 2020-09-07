@@ -6,11 +6,11 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 19:10:50 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/08/26 19:06:06 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/09/05 14:57:25 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_ls.h"
+#include "ls.h"
 #include <pwd.h>
 #include <grp.h>
 
@@ -53,9 +53,11 @@ static void			get_user_group_name(t_argvs *within, struct stat *file)
 		within->info.gname = ft_itoa_base(10, file->st_gid);
 }
 
-void				get_fields(struct stat *file, t_argvs *within)
+void				get_fields(struct stat *file, t_argvs *within, t_ls *doll)
 {
-	within->total += file->st_blocks;
+	doll->info_av->total += file->st_blocks;//change one step higher
+	// ft_printf("%s ", within->path);
+	// ft_printf("%i\n", file->st_blocks);
 	within->info.mode = file->st_mode;
 	within->info.fruit = get_type_file(file);
 	within->info.hlnk = file->st_nlink;
@@ -64,6 +66,7 @@ void				get_fields(struct stat *file, t_argvs *within)
 	within->info.ltime_mod = file->st_ctime;
 }
 
+// void				ft_ls(t_ls *doll)
 void				ft_ls(t_ls *doll)
 {
 	t_argvs			*within;
@@ -73,10 +76,11 @@ void				ft_ls(t_ls *doll)
 	while (within)
 	{
 		if (!lstat(within->path, &file))
-			get_fields(&file, within);
+			get_fields(&file, within, doll);
 		else
-			doll->not_exist = 1;
+			within->not_exist = 1;
+		ft_printf("%s - ", within->path);
+		ft_printf("%i\n", file.st_blocks);
 		within = within->next;
 	}
-	// printf("d");
 }

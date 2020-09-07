@@ -6,11 +6,11 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 16:57:39 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/08/26 21:41:04 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/09/04 20:05:17 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_ls.h"
+#include "ls.h"
 
 static void		get_options(char c, t_ls *doll)
 {
@@ -48,13 +48,14 @@ static void		parse_options(t_ls *doll)
 	}
 }
 
-static t_argvs			*initiate_argvs(void)
+t_argvs			*initiate_argvs(void)
 {
 	t_argvs		*argvv;
 
 	if (!(argvv = (t_argvs*)malloc(sizeof(t_argvs))))
 		return(NULL);
 	ft_memset(argvv, 0, sizeof(argvv));
+	argvv->not_exist = 0;
 	argvv->next = NULL;
 	return(argvv);
 }
@@ -108,7 +109,7 @@ void			parse_arguments(t_ls *doll)
 			else
 				tmp_av->next = avv;
 			tmp_av = avv;
-			// ft_printf("fin = %s\n", *doll->av);
+			// ft_printf("fin = %s\n", doll->info_av->path);
 			doll->av++;
 		}
 	}
@@ -122,15 +123,15 @@ void			validate(t_ls *doll)
 		if (**doll->av == '-')
 			parse_options(doll);
 	}
-	ft_printf("a = %i\n", doll->optns.a);
-	ft_printf("l = %i\n", doll->optns.l);
-	ft_printf("R = %i\n", doll->optns.R);
-	ft_printf("r = %i\n", doll->optns.r);
-	ft_printf("t = %i\n", doll->optns.t);
+	// ft_printf("a = %i\n", doll->optns.a);
+	// ft_printf("l = %i\n", doll->optns.l);
+	// ft_printf("R = %i\n", doll->optns.R);
+	// ft_printf("r = %i\n", doll->optns.r);
+	// ft_printf("t = %i\n", doll->optns.t);
 	// ft_printf("before arguments = %s\n", *doll->av);
 	// printf("\n");
 	parse_arguments(doll);
-	printf("\n");
+	// printf("\n");
 	// while (doll->info_av)
 	// {
 	// 	ft_printf("info_av.name = %s\n", doll->info_av->name);

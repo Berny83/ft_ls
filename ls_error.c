@@ -6,11 +6,11 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 17:53:25 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/08/26 21:36:03 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/09/02 19:08:29 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_ls.h"
+#include "ls.h"
 
 void		ls_error(int err)
 {
@@ -19,4 +19,15 @@ void		ls_error(int err)
 	else if (err == 1)
 		perror("invalid option -- \'-\'");
 	exit(1);
+}
+
+
+void		free_list(t_argvs *content_av)
+{
+	while(content_av)
+	{
+		content_av = content_av->next;
+		free(content_av);
+	}
+	free(content_av);
 }

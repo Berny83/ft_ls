@@ -6,13 +6,13 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:28:03 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/08/26 19:04:08 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/09/05 14:29:57 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_ls.h"
+#include "ls.h"
 
-static t_ls			*initiate(int argc, char **argv)
+t_ls			*initiate(int argc, char **argv)
 {
 	t_ls			*new;
 	struct winsize	window;
@@ -25,7 +25,7 @@ static t_ls			*initiate(int argc, char **argv)
 	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &window) == -1)
 		new->colmn = 1;
 	new->sizecol = window.ws_col;
-	new->not_exist = 0;
+	// new->not_exist = 0;
 	return(new);
 }
 
