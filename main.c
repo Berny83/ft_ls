@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:28:03 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/09/05 14:29:57 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/09/07 17:41:50 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@ t_ls			*initiate(int argc, char **argv)
 	ft_memset(new, 0, sizeof(new));
 	new->ac = argc;
 	new->av = argv;
+	new->optns.l = 0;
+	new->optns.t = 0;
+	new->optns.a = 0;
+	new->optns.R = 0;
+	new->optns.r = 0;
+	if (!(new->info_av = (t_argvs*)malloc(sizeof(t_argvs))))
+		return(NULL);
+	ft_memset(new->info_av, 0, sizeof(t_argvs));
 	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &window) == -1)
 		new->colmn = 1;
 	new->sizecol = window.ws_col;
@@ -37,10 +45,11 @@ int					main(int argc, char **argv)
 	// ft_printf("%i", doll->optns.a);
 	// printf("%i\n", doll->sizecol);
 	// printf("%161s", "d");
+	// printf("x\n");
 	validate(doll);
 	// doll->content_av = doll->info_av;
 	// printf("s\n");
-	ft_ls(doll);
+	ft_ls(doll->info_av);
 	// printf("x\n");
 	display_ls(doll);
 	// free_all(doll);

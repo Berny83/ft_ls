@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 19:26:59 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/08/20 16:34:33 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/09/07 16:16:43 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static void				width_fm_print(t_printf *f, long long res, int length)
 
 void					ft_print_int(t_printf *f)
 {
-	__intmax_t			res;
+	intmax_t			res;
 	int					length;
 	char				*s;
 	char				zero;

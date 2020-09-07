@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 16:57:39 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/09/04 20:05:17 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/09/07 19:15:47 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,16 @@ t_argvs			*initiate_argvs(void)
 
 	if (!(argvv = (t_argvs*)malloc(sizeof(t_argvs))))
 		return(NULL);
-	ft_memset(argvv, 0, sizeof(argvv));
+	// ft_memset(argvv, 0, sizeof(argvv));
+	argvv->path = NULL;
+	argvv->name = NULL;
+	argvv->total = 0;
 	argvv->not_exist = 0;
 	argvv->next = NULL;
 	return(argvv);
 }
 
-void			get_path_name(t_argvs *avv, char *path, char *nam)
+t_argvs			*get_path_name(t_argvs *avv, char *path, char *nam)
 {// . ./ ./includes ./includes/
 	char		*route;
 	char		*preroute;
@@ -69,18 +72,24 @@ void			get_path_name(t_argvs *avv, char *path, char *nam)
 		ls_error(0);
 	if (!(route = ft_strnew(ft_strlen(path) + ft_strlen(nam) + 1)))
 	 	ls_error(0);
-	if (!ft_strcmp(path, nam))
-	{
-		if (!(preroute = ft_strdup("./")))
-			ls_error(0);
-	}
+	if (!(preroute = ft_strdup("./")))
+		ls_error(0);
 	route = ft_strcpy(route, nam);
-	// ft_printf("strcpy = %s\n", route);
-	if (!ft_strcmp(path, nam))
-		route = ft_strcat(preroute, route);
-	// ft_printf("strcpy = %s\n", route);
+	ft_printf("strcpy1 = %s\n", route);
+	if (!ft_strcmp(path, nam) || !ft_strcmp("./", nam))
+	{
+		avv->path = preroute;
+		return (avv);
+	}
+	route = ft_strcat(preroute, path);
+	route = ft_strcat(route, "/");
+	ft_printf("strcpy2 = %s\n", route);
+	route = ft_strcat(route, nam);
+	// ft_printf("strcpy1 = %s\n", route);
+	// ft_printf("strcpy2 = %s\n", route);
 	avv->path = route;
-	// ft_printf("fin = %s\n", avv->info.path);
+	// ft_printf("fin = %s\n", avv->path);
+	return (avv);
 }
 
 void			parse_arguments(t_ls *doll)
@@ -91,10 +100,10 @@ void			parse_arguments(t_ls *doll)
 	if (!*doll->av)
 	{
 		// printf("current directory\n");
-		if (!(doll->info_av = initiate_argvs()))
-			ls_error(0);
+		// if (!(doll->info_av = initiate_argvs()))
+		// 	ls_error(0);
 		doll->info_av->name = ft_strdup(".");
-		doll->info_av->path = ft_strdup(".");
+		doll->info_av->path = ft_strdup("./");
 	}
 	else
 	{
@@ -104,12 +113,15 @@ void			parse_arguments(t_ls *doll)
 			if (!(avv = initiate_argvs()))
 				ls_error(0);
 			get_path_name(avv, ".", *doll->av);
-			if (!doll->info_av)
+			if (!doll->info_av->name)
+			{
 				doll->info_av = avv;
+				// printf("fin = %su\n", doll->info_av->path);
+			}
 			else
 				tmp_av->next = avv;
 			tmp_av = avv;
-			// ft_printf("fin = %s\n", doll->info_av->path);
+			// ft_printf("fin = %su\n", doll->info_av->path);
 			doll->av++;
 		}
 	}
