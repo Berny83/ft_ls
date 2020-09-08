@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 16:57:39 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/09/07 19:15:47 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/09/08 21:00:58 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,28 +64,23 @@ t_argvs			*initiate_argvs(void)
 }
 
 t_argvs			*get_path_name(t_argvs *avv, char *path, char *nam)
-{// . ./ ./includes ./includes/
+{
 	char		*route;
-	char		*preroute;
 
 	if (!(avv->name = ft_strdup(nam)))
 		ls_error(0);
 	if (!(route = ft_strnew(ft_strlen(path) + ft_strlen(nam) + 1)))
 	 	ls_error(0);
-	if (!(preroute = ft_strdup("./")))
-		ls_error(0);
-	route = ft_strcpy(route, nam);
-	ft_printf("strcpy1 = %s\n", route);
-	if (!ft_strcmp(path, nam) || !ft_strcmp("./", nam))
-	{
-		avv->path = preroute;
-		return (avv);
-	}
-	route = ft_strcat(preroute, path);
-	route = ft_strcat(route, "/");
-	ft_printf("strcpy2 = %s\n", route);
-	route = ft_strcat(route, nam);
 	// ft_printf("strcpy1 = %s\n", route);
+	if (!ft_strcmp(path, nam) || !ft_strcmp(".", nam))
+		route = ft_strcpy(route, path);
+	else
+	{
+		route = ft_strcpy(route, path);
+		if (route[ft_strlen(route) - 1] != '/')
+			route = ft_strcat(route, "/");
+		route = ft_strcat(route, nam);
+	}
 	// ft_printf("strcpy2 = %s\n", route);
 	avv->path = route;
 	// ft_printf("fin = %s\n", avv->path);
@@ -112,7 +107,7 @@ void			parse_arguments(t_ls *doll)
 			// printf("another directory\n");
 			if (!(avv = initiate_argvs()))
 				ls_error(0);
-			get_path_name(avv, ".", *doll->av);
+			get_path_name(avv, "./", *doll->av);
 			if (!doll->info_av->name)
 			{
 				doll->info_av = avv;

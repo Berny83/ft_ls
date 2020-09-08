@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 16:08:17 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/09/07 16:17:34 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/09/08 15:37:06 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ static void				print_flags_width(t_printf *f, int length, int res)
 
 void					ft_print_uint(t_printf *f)
 {
-	uintmax_t			res;
+	// uintmax_t			res;
+	__uintmax_t			res;
 	unsigned int		length;
 	char				*s;
 

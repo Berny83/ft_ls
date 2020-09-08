@@ -4,3 +4,4 @@ ft_ls.h.gch
 rt/
 libprintf.a
 ex.c
+lib/*/*

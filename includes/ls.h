@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:29:26 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/09/07 18:12:52 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/09/08 21:24:32 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,8 @@ bool				check_alpha(t_argvs *current);
 bool				check_alpha_r(t_argvs *current);
 bool				check_time(t_argvs *current);
 bool				check_time_r(t_argvs *current);
+void				display_mode(t_argvs *content);
+
+void				gt_directories(t_ls *dolly, t_ls *doll);
 
 #endif

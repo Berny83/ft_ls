@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 15:16:29 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/09/07 19:10:56 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/09/08 21:26:52 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,8 @@ void				ft_get_content_dir(t_ls *doll)
 	{
 		if (!(tmp_content = initiate_argvs()))
 			ls_error(0);
-		ft_printf("before path - %s:\n", doll->info_av->path);
-		ft_printf("before path name - %s:\n", doll->entry->d_name);
+		// ft_printf("before path - %s:\n", doll->info_av->path);
+		// ft_printf("before path name - %s:\n", doll->entry->d_name);
 		get_path_name(tmp_content, doll->info_av->path, doll->entry->d_name);
 		if (!doll->content_av)
 			doll->content_av = tmp_content;
@@ -144,17 +144,22 @@ void				ft_print_content(t_ls *doll)//-a -l -R
 	while (doll->content_av)
 	{
 		// ft_printf("test_ft_print_content\n");
-		if (!doll->optns.l && !doll->optns.R)
+		if (!doll->optns.l)
 		{
 			if (doll->content_av->name[0] == '.' && doll->optns.a == 1)
 				ft_printf("%s  ", doll->content_av->name);
 			else if (doll->content_av->name[0] != '.')
 				ft_printf("%s  ", doll->content_av->name);
 		}
-		// else if (doll->optns.l)
-		// {
-		// 	ft_printf("a");
-		// }
+		else if (doll->optns.l)
+		{
+			if (doll->content_av->name[0] == '.' && doll->optns.a == 1)
+			{
+				display_mode(doll->content_av);
+			}
+			else if (doll->content_av->name[0] != '.')
+				display_mode(doll->content_av);
+		}
 		doll->content_av= doll->content_av->next;
 	}
 	ft_printf("\n");
@@ -173,20 +178,62 @@ void			ft_print_total(t_ls *doll)
 	ft_printf("total %i\n", tog);
 }
 
+void			gt_directories(t_ls *dolly, t_ls *doll)
+{
+	t_argvs		*tmp_dolly;
+	
+	printf("dolly0");
+	dolly->ft_sort = doll->ft_sort;
+	dolly->optns = doll->optns;
+	dolly->sizecol = doll->sizecol;
+	dolly->colmn = doll->colmn;
+	printf("dolly0 = %s", dolly->content_av->path);
+	while (doll->content_av)
+	{
+		if (doll->content_av->info.fruit.idir == 1)
+		{
+			printf("dolly1 = %s", dolly->content_av->path);
+			if (!(tmp_dolly = initiate_argvs()))
+				ls_error(0);
+			printf("dolly2 = %s", dolly->content_av->path);
+			if (!dolly->info_av)
+					dolly->info_av = doll->content_av;
+			else
+				tmp_dolly->next = doll->content_av;
+			tmp_dolly = doll->content_av;
+		}
+		doll->content_av = doll->content_av->next;
+	}
+}
+
 void			display_ls(t_ls *doll)
 {
 	// printf("test1\n");
+	t_argvs		*head;
+	t_ls		*dolly;
 	
 	flags_sort(doll);
+	dolly = initiate(doll->ac, doll->av);
 	while (doll->info_av)
 	{
 		ft_get_content_dir(doll);
 		ft_ls(doll->content_av);
+		head = doll->content_av;
 		if (doll->optns.l)
 			ft_print_total(doll);
-			// ft_printf("total %i\n", doll->info_av->total);
+		doll->content_av = head;
 		ft_sorting(doll, doll->content_av);
 		ft_print_content(doll);
+		doll->content_av = head;
+		printf("before R = %s\n", doll->content_av->path);
+		if (doll->optns.R)
+		{
+			printf("testo\n");
+			printf("FOR R = %s", doll->content_av->path);
+			gt_directories(dolly, doll);
+			printf("testo\n");
+			display_ls(dolly);
+		}
 		free_list(doll->content_av);
 		doll->info_av = doll->info_av->next;
 		if (doll->info_av != NULL)

@@ -1,1 +1,8 @@
 srcs/.DS_Store
+a.out
+ft_ls
+ft_ls.h.gch
+rt/
+libprintf.a
+ex.c
+lib/*/*
