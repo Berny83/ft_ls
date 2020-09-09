@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 15:16:29 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/09/08 21:26:52 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/09/09 15:56:46 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,26 +181,26 @@ void			ft_print_total(t_ls *doll)
 void			gt_directories(t_ls *dolly, t_ls *doll)
 {
 	t_argvs		*tmp_dolly;
+	t_argvs		*nne;
 	
-	printf("dolly0");
 	dolly->ft_sort = doll->ft_sort;
 	dolly->optns = doll->optns;
 	dolly->sizecol = doll->sizecol;
 	dolly->colmn = doll->colmn;
-	printf("dolly0 = %s", dolly->content_av->path);
+	dolly->content_av = NULL;
 	while (doll->content_av)
 	{
-		if (doll->content_av->info.fruit.idir == 1)
+		if (doll->content_av->info.fruit.idir == 1 && ft_strcmp(doll->content_av->name, ".") && ft_strcmp(doll->content_av->name, ".."))
 		{
-			printf("dolly1 = %s", dolly->content_av->path);
 			if (!(tmp_dolly = initiate_argvs()))
 				ls_error(0);
-			printf("dolly2 = %s", dolly->content_av->path);
-			if (!dolly->info_av)
-					dolly->info_av = doll->content_av;
+			printf("dolly2 = %s\n", doll->content_av->name);
+			get_path_name(tmp_dolly, doll->content_av->path, "");
+			if (!dolly->info_av->path)
+				dolly->info_av = tmp_dolly;
 			else
-				tmp_dolly->next = doll->content_av;
-			tmp_dolly = doll->content_av;
+				nne->next = tmp_dolly;
+			nne = tmp_dolly;
 		}
 		doll->content_av = doll->content_av->next;
 	}
@@ -225,14 +225,21 @@ void			display_ls(t_ls *doll)
 		ft_sorting(doll, doll->content_av);
 		ft_print_content(doll);
 		doll->content_av = head;
-		printf("before R = %s\n", doll->content_av->path);
+		// printf("before R = %s\n", doll->content_av->path);
 		if (doll->optns.R)
 		{
-			printf("testo\n");
-			printf("FOR R = %s", doll->content_av->path);
+			// printf("testo\n");
+			printf("FOR R = %s\n", doll->content_av->path);
 			gt_directories(dolly, doll);
-			printf("testo\n");
-			display_ls(dolly);
+			// while (dolly->info_av)
+			// {
+			// 	printf("se_path = %s\n", dolly->info_av->path);
+			// 	printf("se_name = %s\n", dolly->info_av->name);
+			// 	dolly->info_av = dolly->info_av->next;
+			// }
+			// printf("testo\n");
+			if (dolly->info_av->path)
+				display_ls(dolly);
 		}
 		free_list(doll->content_av);
 		doll->info_av = doll->info_av->next;
@@ -240,3 +247,5 @@ void			display_ls(t_ls *doll)
 			ft_printf("\n");
 	}
 }
+
+/*Segmentation fault + can't read all dirs in .git = segmentation fault + smtms push to the list not directory, but the regular file*/
