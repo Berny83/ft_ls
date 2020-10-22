@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 16:57:39 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/22 15:06:36 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/10/22 16:00:47 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ t_argvs			*get_path_name(t_argvs *avv, char *path, char *nam)
 		ls_error(0);
 	if (!(route = ft_strnew(ft_strlen(path) + ft_strlen(nam) + 1)))
 	 	ls_error(0);
-	// ft_printf("strcpy1 = %s\n", route);
 	if (!ft_strcmp(path, nam) || !ft_strcmp("./", nam))
 	{
 		route = ft_strcpy(route, nam);
@@ -83,9 +82,7 @@ t_argvs			*get_path_name(t_argvs *avv, char *path, char *nam)
 			route = ft_strcat(route, "/");
 		route = ft_strcat(route, nam);
 	}
-	// ft_printf("strcpy2 = %s\n", route);
 	avv->path = route;
-	// ft_printf("fin = %s\n", avv->path);
 	return (avv);
 }
 
@@ -106,7 +103,6 @@ void			parse_arguments(t_ls *doll)
 	{
 		while (*doll->av)
 		{
-			// printf("another directory\n");
 			if (!(avv = initiate_argvs()))
 				ls_error(0);
 			get_path_name(avv, ".", *doll->av);

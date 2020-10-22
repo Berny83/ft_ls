@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:29:26 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/09/09 12:36:15 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/10/22 16:19:53 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,8 @@ typedef struct		s_ls
 	char			**av;
 	int				sizecol;
 	unsigned char	colmn: 1;
-	// int				total;
 	t_flags			optns;
 	t_argvs			*info_av; //occupied by arguments without sorting
-	t_argvs			*content_av; //directories content
-	// t_argvs			*last; //free
 	bool			(*ft_sort)(t_argvs *mp);
 }					t_ls;
 
@@ -91,7 +88,6 @@ void				ls_error(int err);
 t_argvs				*initiate_argvs(void);
 void				validate(t_ls *doll);
 void				parse_arguments(t_ls *doll);
-// void				get_path_name(t_argvs *avv, char *path, char *nam);
 t_argvs				*get_path_name(t_argvs *avv, char *path, char *nam);
 void				ft_ls(t_argvs *example);
 void				get_fields(struct stat *file, t_argvs *within);
@@ -102,6 +98,8 @@ bool				ft_swap(t_ls *doll, t_argvs *current);
 void				ft_get_content_dir(t_ls *doll);
 void				ft_print_content(t_ls *doll);
 void				display_ls(t_ls *doll);
+void				display_file(t_ls *doll);
+void				display_dir(t_ls *doll);
 void				free_list(t_argvs *content_av);
 void				ft_print_total(t_ls *doll);
 
