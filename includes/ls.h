@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:29:26 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/22 16:19:53 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/10/23 20:01:04 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 #define LS_H
 
 // #include <stdlib.h>
-// #include <sys/types.h> //opendir clossedir readdir stat lstat getpwuid getgrgid listxattr getxattr
+// #include <sys/types.h> // opendir clossedir readdir stat lstat getpwuid getgrgid listxattr getxattr
 #include <sys/stat.h> //??? for some stat defines
 #include <dirent.h>
-// #include <unistd.h> //readlink
-#include <stdio.h>
+// #include <unistd.h> // readlink
+#include <stdio.h> // printf
 #include "../lib/includes/ft_printf.h"
-#include <errno.h> //perror errno
-// #include <string.h> //strerror
-#include <time.h> //time ctime
-#include <sys/ioctl.h> //ioctl for multiple columns
+#include <errno.h> // perror errno
+// #include <string.h> // strerror
+#include <time.h> // time ctime
+#include <sys/ioctl.h> // ioctl for multiple columns
 #include <stdbool.h>
 #include "../lib/includes/libft.h"
 
@@ -95,7 +95,7 @@ void				get_fields(struct stat *file, t_argvs *within);
 void				flags_sort(t_ls *doll);
 void				ft_sorting(t_ls *doll, t_argvs *cur_struct);
 bool				ft_swap(t_ls *doll, t_argvs *current);
-void				ft_get_content_dir(t_ls *doll);
+t_ls				*ft_get_content_dir(t_ls *doll);
 void				ft_print_content(t_ls *doll);
 void				display_ls(t_ls *doll);
 void				display_file(t_ls *doll);
@@ -110,7 +110,5 @@ bool				check_time_r(t_argvs *current);
 void				display_mode(t_argvs *content);
 char				gt_type_file(t_type type);
 char				*gt_rigths(int i);
-
-void				gt_directories(t_ls *dolly, t_ls *doll);
 
 #endif

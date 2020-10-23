@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:50:54 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/09/09 12:29:23 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/10/22 20:06:02 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ static void				o_pr_fl_without_fm(t_printf *f, int length, int res)
 
 void					ft_print_oint(t_printf *f)
 {
-	uintmax_t			res;
-	// __uintmax_t			res;
+	// uintmax_t			res;
+	__uintmax_t			res;
 	unsigned int		length;
 	char				*s;
 

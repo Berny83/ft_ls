@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 16:57:39 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/22 16:00:47 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/10/23 20:01:54 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ t_argvs			*get_path_name(t_argvs *avv, char *path, char *nam)
 			route = ft_strcat(route, "/");
 		route = ft_strcat(route, nam);
 	}
+	// printf("some route = %s\n", route);
 	avv->path = route;
 	return (avv);
 }
@@ -112,9 +113,14 @@ void			parse_arguments(t_ls *doll)
 				// printf("fin = %su\n", doll->info_av->path);
 			}
 			else
+			{
+				// printf("tt\n");
 				tmp_av->next = avv;
+			}
 			tmp_av = avv;
-			// ft_printf("fin = %su\n", doll->info_av->path);
+			// printf("tmp_av = %s\n", tmp_av->path);
+			// printf("fin = %s\n", doll->info_av->name);
+			// printf("sss = %s\n", *doll->av);
 			doll->av++;
 		}
 	}
@@ -139,8 +145,8 @@ void			validate(t_ls *doll)
 	// printf("\n");
 	// while (doll->info_av)
 	// {
-	// 	ft_printf("info_av.name = %s\n", doll->info_av->name);
-	// 	ft_printf("info_av.path = %s\n", doll->info_av->path);
+	// 	printf("info_av.name = %s\n", doll->info_av->name);
+	// 	printf("info_av.path = %s\n", doll->info_av->path);
 	// 	doll->info_av = doll->info_av->next;
 	// }
 }
