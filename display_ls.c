@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 15:16:29 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/24 15:58:30 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/10/24 16:55:24 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ t_argvs				*ft_get_content_dir(t_argvs *info_av)
 	{
 		if (!(content = initiate_argvs()))
 			ls_error(0);
-		// ft_printf("before path - %s:\n", info_av->path);
 		get_path_name(content, info_av->path, entry->d_name);
 		// ft_printf("before path - %s:\n", info_av->path);
 		if (!new->name)
@@ -135,6 +134,7 @@ void			display_dir(t_argvs *current, bool (*ft_sort)(t_argvs *), t_flags *fl)
 	ft_sorting(dolly->ft_sort, dolly->info_av);
 	head = dolly->info_av;
 	ft_print_content_dir(dolly);
+	printf("\n");
 	// printf("before R = %s\n", doll->info_av->path);
 	if (fl->R)
 	{
@@ -145,7 +145,7 @@ void			display_dir(t_argvs *current, bool (*ft_sort)(t_argvs *), t_flags *fl)
 		{
 			if (dolly->info_av->info.fruit.idir)
 			{
-				if (ft_strcmp(dolly->info_av->name, ".") || ft_strcmp(dolly->info_av->name, ".."))
+				if (ft_strcmp(dolly->info_av->name, ".") && ft_strcmp(dolly->info_av->name, ".."))
 					display_dir(dolly->info_av, dolly->ft_sort, &dolly->optns);
 				// printf("FOR R = %s\n", dolly->info_av->name);
 				// display_dir(dolly->info_av); -needed

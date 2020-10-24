@@ -1,4 +1,4 @@
-#include "includes/ft_ls.h"
+#include "includes/ls.h"
 #include <stdio.h>
 
 int		ftt_strcmp(const char *s1, const char *s2)
@@ -15,9 +15,9 @@ int		ftt_strcmp(const char *s1, const char *s2)
 int		main(void)
 {
 	int	i = 0;
-	char s1[] = "includes";
+	char s1[] = ".git";
 	char s2[] = ".git"; 
 	i = ftt_strcmp(s1, s2);
-	ft_printf("%i\n", i);
+	printf("%i\n", i);
 	return(0);
 }
