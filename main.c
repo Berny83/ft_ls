@@ -6,13 +6,13 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:28:03 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/23 18:58:45 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/10/24 15:29:54 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
-t_ls			*initiate(int argc, char **argv)
+t_ls			*initiate(void)
 {
 	t_ls			*new;
 	struct winsize	window;
@@ -20,8 +20,6 @@ t_ls			*initiate(int argc, char **argv)
 	if (!(new = (t_ls*)malloc(sizeof(t_ls))))
 		ls_error(0);
 	ft_memset(new, 0, sizeof(new));
-	new->ac = argc;
-	new->av = argv;
 	new->optns.l = 0;
 	new->optns.t = 0;
 	new->optns.a = 0;
@@ -36,12 +34,12 @@ t_ls			*initiate(int argc, char **argv)
 	return(new);
 }
 
-int					main(int argc, char **argv)
+int					main(int ac, char **av)
 {
 	t_ls			*doll;
 	
-	doll = initiate(argc, argv);
-	validate(doll);
+	doll = initiate();
+	validate(doll, ac, av);
 	ft_ls(doll->info_av);
 	display_ls(doll);
 	// free(doll);

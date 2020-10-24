@@ -6,49 +6,70 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 15:16:29 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/23 20:12:51 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/10/24 15:58:30 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
-t_ls				*ft_get_content_dir(t_ls *doll)
+t_argvs				*ft_get_content_dir(t_argvs *info_av)
 {
-	t_ls			*new;
 	t_argvs			*content;
 	t_argvs			*tmp_con;
+	t_argvs			*new;
+	DIR				*dirc;
+	struct dirent 	*entry;
 
-	new = initiate(doll->ac, doll->av);
-	doll->dirc = opendir(doll->info_av->path);
-	new->ft_sort = doll->ft_sort;
-	new->optns = doll->optns;
-	// if (doll->ac > 2)
-	// 	ft_printf("%s:\n", doll->info_av->path);
-	if (!doll->dirc)
+	dirc = opendir(info_av->path);
+	new = initiate_argvs();
+	ft_printf("%s:\n", info_av->path);
+	if (!dirc)
 	{
 		perror("dir_open_error");
 		exit(1);
 	}
-	while ((doll->entry = readdir(doll->dirc)))
+	while ((entry = readdir(dirc)))
 	{
 		if (!(content = initiate_argvs()))
 			ls_error(0);
-		// ft_printf("before path - %s:\n", doll->info_av->path);
-		get_path_name(content, doll->info_av->path, doll->entry->d_name);
-		if (!new->info_av->name)
-			new->info_av = content;
+		// ft_printf("before path - %s:\n", info_av->path);
+		get_path_name(content, info_av->path, entry->d_name);
+		// ft_printf("before path - %s:\n", info_av->path);
+		if (!new->name)
+			new = content;
 		else
 			tmp_con->next = content;
 		tmp_con = content;
 	}
-	closedir(doll->dirc);
-	return (new);
+	closedir(dirc);
+	return(new);
 }
 
-void				ft_print_content(t_ls *doll)//-a -l -R
+void				ft_print_content(t_argvs *current, t_flags *fl)//-a -l -R
 {
-	// while (doll->info_av)
-	// {
+	if (!fl->l)
+	{
+		if (current->name[0] == '.' && fl->a == 1)
+			ft_printf("%s  ", current->name);
+		else if (current->name[0] != '.')
+			ft_printf("%s  ", current->name);
+		// printf("dsplay_file = %s\n", doll->info_av->name);
+	}
+	else if (fl->l)
+	{
+		if (current->name[0] == '.' && fl->a == 1)
+			display_mode(current);
+		else if (current->name[0] != '.')
+			display_mode(current);
+	}
+	// printf("ft_print_content_file\n");
+	// doll->info_av= doll->info_av->next;
+}
+
+void				ft_print_content_dir(t_ls *doll)//-a -l -R
+{
+	while (doll->info_av)
+	{
 		// ft_printf("test_ft_print_content\n");
 		if (!doll->optns.l)
 		{
@@ -68,60 +89,67 @@ void				ft_print_content(t_ls *doll)//-a -l -R
 				display_mode(doll->info_av);
 		}
 		// printf("ft_print_content_file\n");
-		// doll->info_av= doll->info_av->next;
-	// }
+		doll->info_av= doll->info_av->next;
+	}
 }
 
-void			ft_print_total(t_ls *doll)
+void			ft_print_total(t_argvs *current)
 {
 	int			tog;
 
 	tog = 0;
-	while (doll->info_av)
+	while (current)
 	{
-		tog += doll->info_av->total;
-		doll->info_av = doll->info_av->next;
+		tog += current->total;
+		current = current->next;
 	}
 	ft_printf("total %i\n", tog);
 }
 
-void			display_file(t_ls *doll)
+void			display_file(t_argvs *current, t_flags *fl)
 {
-	if (doll->info_av->not_exist)
-		ft_printf("ft_ls: cannot access '%s': No such file or directory\n", doll->info_av->name);
+	if (current->not_exist)
+		ft_printf("ft_ls: cannot access '%s': No such file or directory\n", current->name);
 	else
 	{
-		if (doll->optns.l)
-			ft_print_total(doll);
-		ft_print_content(doll);
+		if (fl->l)
+			ft_print_total(current);
+		ft_print_content(current, fl);
 	}
 	// printf("done\n");
 }
 
-void			display_dir(t_ls *doll)
+void			display_dir(t_argvs *current, bool (*ft_sort)(t_argvs *), t_flags *fl)
 {
 	t_ls		*dolly;
 	t_argvs		*head;
-
-	dolly = ft_get_content_dir(doll);
-	// printf("before R = %s\n", doll->info_av->path);
+	
+	
+	dolly = initiate();
+	dolly->info_av = ft_get_content_dir(current);
+	dolly->ft_sort = ft_sort;
+	dolly->optns = *fl;
 	ft_ls(dolly->info_av);
-	printf("before R = %s\n", dolly->info_av->path);
-	if (doll->optns.l)
-		ft_print_total(doll);
-	ft_sorting(dolly, dolly->info_av);
+	if (fl->l)
+		ft_print_total(current);
+	ft_sorting(dolly->ft_sort, dolly->info_av);
 	head = dolly->info_av;
-	display_file(dolly); // -- loop???
-	printf("before R = %s\n", doll->info_av->path);
-	if (doll->optns.R)
+	ft_print_content_dir(dolly);
+	// printf("before R = %s\n", doll->info_av->path);
+	if (fl->R)
 	{
 		//it must loop directories
 		// printf("FOR R = %s\n", doll->info_av->path);
 		dolly->info_av = head;
 		while (dolly->info_av)
 		{
-			if (!ft_strcmp(doll->info_av->name, ".") && !ft_strcmp(doll->info_av->name, ".."))
-				display_ls(dolly);
+			if (dolly->info_av->info.fruit.idir)
+			{
+				if (ft_strcmp(dolly->info_av->name, ".") || ft_strcmp(dolly->info_av->name, ".."))
+					display_dir(dolly->info_av, dolly->ft_sort, &dolly->optns);
+				// printf("FOR R = %s\n", dolly->info_av->name);
+				// display_dir(dolly->info_av); -needed
+			}
 			dolly->info_av = dolly->info_av->next;
 		}
 	}
@@ -138,9 +166,9 @@ void			display_ls(t_ls *doll)
 		// printf("fruit idir = %i\n", doll->info_av->info.fruit.idir);
 		// printf("display_ls - loop = %s\n", doll->info_av->path);
 		if (!doll->info_av->info.fruit.idir)
-			display_file(doll);
+			display_file(doll->info_av, &doll->optns);
 		else
-			display_dir(doll);
+			display_dir(doll->info_av, doll->ft_sort, &doll->optns);
 		if (doll->info_av)
 			doll->info_av = doll->info_av->next;
 		if (doll->info_av)

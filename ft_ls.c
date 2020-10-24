@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 19:10:50 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/23 17:30:52 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/10/24 13:48:23 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,19 @@ static void			get_type_file(struct stat *file, t_argvs *within)
 {
 	// printf("%o\n", file->st_mode);
 	// printf("%o\n", __S_IFDIR);
-	if ((file->st_mode & __S_IFREG) == __S_IFREG)
+	if ((file->st_mode & S_IFREG) == S_IFREG)
 		within->info.fruit.ireg = 1;
-	else if ((file->st_mode & __S_IFDIR) == __S_IFDIR)
+	else if ((file->st_mode & S_IFDIR) == S_IFDIR)
 		within->info.fruit.idir = 1;
-	else if ((file->st_mode & __S_IFLNK) == __S_IFLNK)
+	else if ((file->st_mode & S_IFLNK) == S_IFLNK)
 		within->info.fruit.ilnk = 1;
-	else if ((file->st_mode & __S_IFBLK) == __S_IFBLK)
+	else if ((file->st_mode & S_IFBLK) == S_IFBLK)
 		within->info.fruit.iblk = 1;
-	else if ((file->st_mode & __S_IFCHR) == __S_IFCHR)
+	else if ((file->st_mode & S_IFCHR) == S_IFCHR)
 		within->info.fruit.ichr = 1;
-	else if ((file->st_mode & __S_IFIFO) == __S_IFIFO)
+	else if ((file->st_mode & S_IFIFO) == S_IFIFO)
 		within->info.fruit.ifif = 1;
-	else if ((file->st_mode & __S_IFSOCK) == __S_IFSOCK)
+	else if ((file->st_mode & S_IFSOCK) == S_IFSOCK)
 		within->info.fruit.isck = 1;
 	// ft_printf("%i\n", result.idir);
 }

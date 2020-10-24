@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 16:57:39 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/23 20:01:54 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/10/24 15:41:10 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,20 @@ static void		get_options(char c, t_ls *doll)
 		doll->optns.t = 1;
 }
 
-static void		parse_options(t_ls *doll)
+static void		parse_options(t_ls *doll, char **av)
 {
-	while (*doll->av)
+	while (*av)
 	{
-		if (**doll->av == '-')
-			(*doll->av)++;
+		if (**av == '-')
+			(*av)++;
 		else
 			return ;
-		while(**doll->av)
+		while(**av)
 		{
-			get_options(**doll->av, doll);
-			(*doll->av)++;
+			get_options(**av, doll);
+			(*av)++;
 		}
-		doll->av++;
+		av++;
 	}
 }
 
@@ -87,12 +87,12 @@ t_argvs			*get_path_name(t_argvs *avv, char *path, char *nam)
 	return (avv);
 }
 
-void			parse_arguments(t_ls *doll)
+void			parse_arguments(t_ls *doll, char **av)
 {
 	t_argvs		*avv;
 	t_argvs		*tmp_av;
 	
-	if (!*doll->av)
+	if (!*av)
 	{
 		// printf("current directory\n");
 		// if (!(doll->info_av = initiate_argvs()))
@@ -102,11 +102,11 @@ void			parse_arguments(t_ls *doll)
 	}
 	else
 	{
-		while (*doll->av)
+		while (*av)
 		{
 			if (!(avv = initiate_argvs()))
 				ls_error(0);
-			get_path_name(avv, ".", *doll->av);
+			get_path_name(avv, ".", *av);
 			if (!doll->info_av->name)
 			{
 				doll->info_av = avv;
@@ -121,18 +121,18 @@ void			parse_arguments(t_ls *doll)
 			// printf("tmp_av = %s\n", tmp_av->path);
 			// printf("fin = %s\n", doll->info_av->name);
 			// printf("sss = %s\n", *doll->av);
-			doll->av++;
+			av++;
 		}
 	}
 }
 
-void			validate(t_ls *doll)
+void			validate(t_ls *doll, int ac, char **av)
 {
-	doll->av++;
-	if (doll->ac > 1)
+	av++;
+	if (ac > 1)
 	{
-		if (**doll->av == '-')
-			parse_options(doll);
+		if (**av == '-')
+			parse_options(doll, av);
 	}
 	// ft_printf("a = %i\n", doll->optns.a);
 	// ft_printf("l = %i\n", doll->optns.l);
@@ -141,7 +141,7 @@ void			validate(t_ls *doll)
 	// ft_printf("t = %i\n", doll->optns.t);
 	// ft_printf("before arguments = %s\n", *doll->av);
 	// printf("\n");
-	parse_arguments(doll);
+	parse_arguments(doll, av);
 	// printf("\n");
 	// while (doll->info_av)
 	// {
