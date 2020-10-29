@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:29:26 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/24 15:48:07 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/10/29 22:54:43 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 #include "../lib/includes/libft.h"
 
 #define FLAGGS "-lRart"
+#define SYMSIZE 1024
 
 typedef struct		s_flags
 {
@@ -58,6 +59,7 @@ typedef struct		s_data
 	char			*gname; //group name
 	int				size;
 	time_t			ltime_mod;
+	char			sym[SYMSIZE + 1];
 }					t_data;
 
 typedef struct		s_argvs
@@ -72,40 +74,46 @@ typedef struct		s_argvs
 
 typedef struct		s_ls
 {
-	int				sizecol;
-	unsigned char	colmn: 1;
+	int				ac;
+	char			**av;
 	t_flags			optns;
-	t_argvs			*info_av; //occupied by arguments without sorting
+	t_argvs			*info_av;
 	bool			(*ft_sort)(t_argvs *mp);
 }					t_ls;
 
-t_ls				*initiate(void);
-void				ls_error(int err);
-t_argvs				*initiate_argvs(void);
-void				validate(t_ls *doll, int ac, char **av);
-void				parse_arguments(t_ls *doll, char **av);
-t_argvs				*get_path_name(t_argvs *avv, char *path, char *nam);
+// -------------main--------------------
+void				validate(t_ls *doll);
 void				ft_ls(t_argvs *example);
-void				get_fields(struct stat *file, t_argvs *within);
+void				display_ls(t_ls *doll);
 
+// ------------validate-----------------
+t_argvs				*initiate_argvs(void);
+void				parse_arguments(t_ls *doll);
+t_argvs				*get_path_name(t_argvs *avv, char *path, char *nam);
+
+// --------------sort-------------------
 void				flags_sort(t_ls *doll);
 void				ft_sorting(bool (*ft_sort)(t_argvs *), t_argvs *cur_struct);
 bool				ft_swap(bool (*ft_sort)(t_argvs *), t_argvs *current);
-t_argvs				*ft_get_content_dir(t_argvs *info_av);
-void				ft_print_content(t_argvs *current, t_flags *fl);
-void				ft_print_content_dir(t_ls *doll);
-void				display_ls(t_ls *doll);
-void				display_file(t_argvs *current, t_flags *fl);
-void				display_dir(t_argvs *current, bool (*ft_sort)(t_argvs *), t_flags *fl);
-void				free_list(t_argvs *content_av);
-void				ft_print_total(t_argvs *current);
-
 bool				check_alpha(t_argvs *current);
 bool				check_alpha_r(t_argvs *current);
 bool				check_time(t_argvs *current);
 bool				check_time_r(t_argvs *current);
+
+// -------------display-----------------
+void				display_no_file(t_ls *doll);
+bool				display_file(t_ls *doll);
+void				ft_print_content(t_argvs *current, t_flags *fl);
+void				display_dir(t_ls *doll);
+void				loopfol(t_argvs *curr, bool (*ft_sort)(t_argvs *), t_flags *fl, int ac);
+t_argvs				*ft_get_content_dir(t_argvs *info_av, t_flags *fl);
+void				ft_print_content_dir(t_argvs *current, t_flags *fl);
+
+// -------------ls_error----------------
+void				ls_error(int err);
+void				free_list(t_argvs *content_av);
+
+// -------------display_ls--------------
 void				display_mode(t_argvs *content);
-char				gt_type_file(t_type type);
-char				*gt_rigths(int i);
 
 #endif

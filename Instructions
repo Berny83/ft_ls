@@ -1,0 +1,72 @@
+https://www.firststeps.ru/linux/r.php?20 -- about structure DIR for work with directory
+https://losst.ru/tipy-fajlov-v-linux -- types of files
+https://stackoverrun.com/ru/q/11060896 -- types of files
+https://stackoverflow.com/questions/49392870/c-programming-directory-name-from-dir-struct -- c programming - directory name from DIR* struct
+http://rus-linux.net/MyLDP/consol/linux-ls-command.html -- ls
+https://losst.ru/tipy-fajlov-v-linux -- типы файлов
+http://rus-linux.net/MyLDP/admin/prava-dostupa-v-linux.html -- механизм прав доступа
+
+
+16.08.20
+Start: 15.10
+
+flags: -lRart
+
+ls <flags> <name>
+
+functions allowed: https://www.opennet.ru/man.shtml?topic=opendir&category=3&russian=5 -- man
+
+* write
+* ioctl - to set and get window size tty
+* opendir - open a directory
+* readdir - read a directory
+* closedir - close a directory
+* stat - get file status
+* lstat - get symbolic link status
+* getpwuid - search user database for a user ID
+* getgrgid - get group database entry for a group ID
+* listxattr - list extended attribute names
+* getxattr - retrieve an extended attribute value
+* time
+* ctime - transform date and time to broken-down time or ASCII
+* readlink - display value of a symbolic link
+* malloc
+* free
+* perror - explain error codes
+* strerror - return string describing error number
+* exit 
+
+ctrl+k ctrl+f - убрать табуляцию
+
+change makefile - some problems with functions' visibility.
+change display_ls.c - ft_get_content_dir(t_ls *doll)
+
+FT_LS
+
+++//./ft_ls -l ../../../../../var/ -- ссылки
+++// пути переделать
+//+++../../../../../var/lib/snapd/snaps/partial: -- ls: cannot open directory '../../../../../var/lib/snapd/void': Permission denied
+
+/*Segmentation fault + can't read all dirs in .git = segmentation fault + smtms push to the list not directory, but the regular file*/
+/* titles ./.git/folder/ must be .git/folder/
+
+	++delete content_av;
+	++do everything by info_av;
+
+	+отдельный ft_print_content для файлов и для папок
+	++./ft_ls display_ls.c ex.c lib
+
+	++print_content redo flags and conditions -a 
+
+	++./ft_ls -a lib/
+	++before R = ./lib/.
+	++.  before R = ./lib/
+*/
+
+//need to find length and columns to write size/data ????
+multiple colums for -l  --- one more structure with max_len of path, name, etc + man tty ioctl
+makefile
+tests
+free
+norminette
+printf????

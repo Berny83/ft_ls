@@ -6,13 +6,13 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 16:40:21 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/09/08 20:14:48 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/10/29 22:55:10 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
-char		gt_type_file(t_type type)
+static char			gt_type_file(t_type type)
 {
 	if (type.iblk)
 		return ('b');
@@ -32,7 +32,7 @@ char		gt_type_file(t_type type)
 	
 }
 
-char		*gt_rigths(int i)
+static char			*gt_rigths(int i)
 {
 	if (i == 7)
 		return ("rwx");
@@ -48,13 +48,23 @@ char		*gt_rigths(int i)
 		return ("-w-");
 	else if (i == 1)
 		return ("--x");
-	return ("error");
+	return ("---");
 }
 
-void		display_mode(t_argvs *content)
+static void			print_time(t_argvs *content)
 {
-	char	*s;
-	int		i;
+	char			*str_time;
+	time_t			time;
+
+	time = content->info.ltime_mod;
+	str_time = ctime(&time);
+	ft_printf("%.12s ", str_time + 4);
+}
+
+void				display_mode(t_argvs *content)
+{
+	char			*s;
+	int				i;
 
 	i = 3;
 	ft_printf("%c", gt_type_file(content->info.fruit));
@@ -63,6 +73,11 @@ void		display_mode(t_argvs *content)
 		s = gt_rigths(((content->info.mode >> 3 * i) & 7)); //0 3 6 16bits, last 9 - user(rwx) group(rwx) other(rwx)
 		ft_printf("%s", s);
 	}
-	ft_printf(" %i %s %s\n", content->info.hlnk, content->info.uname, content->info.gname);
-	//need to find length and columns to write size/data
+	ft_printf(" %i %s %s  ", content->info.hlnk,\
+	content->info.uname, content->info.gname);
+	ft_printf("%i ", content->info.size);
+	print_time(content);
+	ft_printf("%s", content->name);
+	if (content->info.fruit.ilnk)
+		ft_printf(" -> %s", content->info.sym);
 }
