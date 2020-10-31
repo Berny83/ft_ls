@@ -6,26 +6,25 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 20:21:59 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/31 18:19:42 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/10/31 20:10:49 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_len		initiate_len(void)
+t_len			initiate_len(void)
 {
-	t_len	new;
-	
+	t_len		new;
+
 	new.len_hlnk = 0;
 	new.len_uname = 0;
 	new.len_gname = 0;
 	new.len_size = 0;
 	new.len_time = 0;
-
-	return(new);
+	return (new);
 }
 
-void		get_max_len(t_argvs *curr, t_len *get_len)
+void			get_max_len(t_argvs *curr, t_len *get_len)
 {
 	int			tmp;
 
@@ -51,7 +50,7 @@ void		get_max_len(t_argvs *curr, t_len *get_len)
 	}
 }
 
-void			ft_print_content(t_argvs *current, t_flags *fl)//-a -l -R
+void			ft_print_content(t_argvs *current, t_flags *fl)
 {
 	t_len		get_len;
 	t_argvs		*head;
@@ -81,8 +80,6 @@ void			ft_print_content(t_argvs *current, t_flags *fl)//-a -l -R
 		}
 	}
 }
-
-
 
 bool			display_file(t_ls *doll)
 {

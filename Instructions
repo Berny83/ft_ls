@@ -64,8 +64,8 @@ FT_LS
 */
 
 //need to find length and columns to write size/data ????
-multiple colums for -l  --- one more structure with max_len of path, name, etc + man tty ioctl
-makefile
++++multiple colums for -l  --- one more structure with max_len of path, name, etc + man tty ioctl
++++makefile
 tests
 free
 norminette
@@ -210,12 +210,21 @@ Error:		 ls -.
 
 /bin/ls return: 1 | ft_ls return: 0
 
+ls: illegal option -- .
+usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]
 
 Error:		 ls -l.
 
 /bin/ls return: 1 | ft_ls return: 0
 
+ls: illegal option -- .
+usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]
+
 
 Error:		 ls -.r
 
 /bin/ls return: 1 | ft_ls return: 0
+
+at-k5% ls -.r
+ls: illegal option -- .
+usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]

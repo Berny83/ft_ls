@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 16:40:21 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/31 18:19:57 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/10/31 20:02:09 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static char			gt_type_file(t_type type)
 	else if (type.isck)
 		return ('s');
 	return (' ');
-	
 }
 
 static char			*gt_rigths(int i)
@@ -63,7 +62,7 @@ static void			print_time(t_argvs *content)
 
 static void			print_hlnk(t_argvs *content, t_len *get_len)
 {
-	int				i = 0;
+	int				i;
 
 	i = get_len->len_hlnk;
 	write(1, "  ", 2);
@@ -74,7 +73,7 @@ static void			print_hlnk(t_argvs *content, t_len *get_len)
 
 static void			print_uname(t_argvs *content, t_len *get_len)
 {
-	int				i = 0;
+	int				i;
 
 	i = get_len->len_uname;
 	write(1, " ", 1);
@@ -85,7 +84,7 @@ static void			print_uname(t_argvs *content, t_len *get_len)
 
 static void			print_gname(t_argvs *content, t_len *get_len)
 {
-	int				i = 0;
+	int				i;
 
 	i = get_len->len_gname;
 	write(1, "  ", 2);
@@ -96,7 +95,7 @@ static void			print_gname(t_argvs *content, t_len *get_len)
 
 static void			print_size(t_argvs *content, t_len *get_len)
 {
-	int				i = 0;
+	int				i;
 
 	i = get_len->len_size;
 	write(1, "  ", 2);

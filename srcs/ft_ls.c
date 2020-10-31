@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 19:10:50 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/31 18:19:06 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/10/31 19:52:47 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 
 static void			get_type_file(struct stat *file, t_argvs *within)
 {
-	// printf("%o\n", file->st_mode);
-	// printf("%o\n", __S_IFDIR);
-	// подняв ссылку вверх - получила доступ к симссылкам
 	int				len_sym;
 	
 	if ((file->st_mode & S_IFMT) == S_IFLNK)

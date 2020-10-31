@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:29:26 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/31 18:51:06 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/10/31 20:12:06 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct		s_data
 typedef struct		s_argvs
 {
 	int				total;
-	char			*path;	
+	char			*path;
 	char			*name;
 	unsigned char	not_exist: 1;
 	t_data			info;
@@ -90,7 +90,6 @@ typedef struct		s_len
 	int				len_size;
 	int				len_time;
 }					t_len;
-
 
 // -------------main--------------------
 void				validate(t_ls *doll);

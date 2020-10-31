@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 20:32:30 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/31 19:15:57 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/10/31 19:53:19 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void			ft_print_total(t_argvs *current)
 	ft_printf("total %i\n", tog);
 }
 
-void				ft_print_content_dir(t_argvs *current, t_flags *fl)//-a -l -R
+void				ft_print_content_dir(t_argvs *current, t_flags *fl)
 {
 	t_len		get_len;
 	t_argvs		*head;
@@ -146,8 +146,6 @@ void				loopfol(t_argvs *curr, bool (*ft_sort)(t_argvs *), t_flags *fl, int ac)
 			if (head->info.fruit.idir && ft_strcmp(head->name, ".") && \
 			ft_strcmp(head->name, ".."))
 			{
-				// free_list(head);
-				// printf("re = %i\n", head->info.fruit.idir);
 				loopfol(head, ft_sort, fl, ac);
 			}
 			head = head->next;
@@ -155,8 +153,6 @@ void				loopfol(t_argvs *curr, bool (*ft_sort)(t_argvs *), t_flags *fl, int ac)
 				return ;
 		}
 	}
-	// free_list(head);
-	// free_list(tmp);
 }
 
 void				display_dir(t_ls *doll)
