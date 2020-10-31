@@ -70,3 +70,152 @@ tests
 free
 norminette
 printf????
+
+tests:
+Files your and our differ
+
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#                                                       :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#          ~ TESTS WITH ONE ARGUMENT ~              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#                                                      #+#    #+#              #
+#                                                     ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+
+
+Success:	 ls -l
+
+
+Success:	 ls -a
+
+
+Success:	 ls -r
+
+Files your and our differ
+
+Error:		 ls -R
+
+1,2d0
+< 
+< t_dir:
+
+Success:	 ls -t
+
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#                                                       :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#      ~ TESTS WITH TWO OR MORE ARGUMENT ~          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#                                                      #+#    #+#              #
+#                                                     ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+
+
+Success:	 ls -l -a
+
+
+Success:	 ls -l -a -r
+
+Files your and our differ
+
+Error:		 ls -l -a -r -R
+
+1,2d0
+< 
+< t_dir:
+Files your and our differ
+
+Error:		 ls -l -a -r -R -t
+
+1,2d0
+< 
+< t_dir:
+4,7d1
+< drwxr-xr-x  6 aagrivan  student  204 Oct 31 12:33 .
+< -rw-r--r--  1 aagrivan  student   16 Oct 31 12:33 .president
+< -rw-r--r--  1 aagrivan  student    3 Oct 31 12:33 42
+< -rw-r--r--  1 aagrivan  student  759 Oct 31 12:33 couloir
+8a3,6
+> -rw-r--r--  1 aagrivan  student  759 Oct 31 12:33 couloir
+> -rw-r--r--  1 aagrivan  student    3 Oct 31 12:33 42
+> -rw-r--r--  1 aagrivan  student   16 Oct 31 12:33 .president
+> drwxr-xr-x  6 aagrivan  student  204 Oct 31 12:33 .
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#                                                       :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#        ~ TEST WITH JOINED ARGUMENTS ~             +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#                                                      #+#    #+#              #
+#                                                     ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+
+
+Success:	 ls -la
+
+
+Success:	 ls -rla
+
+Files your and our differ
+
+Error:		 ls -rlRa
+
+1,2d0
+< 
+< t_dir:
+Files your and our differ
+
+Error:		 ls -trlRa
+
+1,2d0
+< 
+< t_dir:
+4,7d1
+< drwxr-xr-x  6 aagrivan  student  204 Oct 31 12:33 .
+< -rw-r--r--  1 aagrivan  student   16 Oct 31 12:33 .president
+< -rw-r--r--  1 aagrivan  student    3 Oct 31 12:33 42
+< -rw-r--r--  1 aagrivan  student  759 Oct 31 12:33 couloir
+8a3,6
+> -rw-r--r--  1 aagrivan  student  759 Oct 31 12:33 couloir
+> -rw-r--r--  1 aagrivan  student    3 Oct 31 12:33 42
+> -rw-r--r--  1 aagrivan  student   16 Oct 31 12:33 .president
+> drwxr-xr-x  6 aagrivan  student  204 Oct 31 12:33 .
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#                                                       :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#          ~ TESTS THAT FAILS IN /bin/ls -1 ~       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#                                                      #+#    #+#              #
+#                                                     ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+
+
+Error:		 ls -.
+
+/bin/ls return: 1 | ft_ls return: 0
+
+
+Error:		 ls -l.
+
+/bin/ls return: 1 | ft_ls return: 0
+
+
+Error:		 ls -.r
+
+/bin/ls return: 1 | ft_ls return: 0
