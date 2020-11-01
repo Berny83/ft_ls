@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 16:05:29 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/08/10 18:19:41 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/01 23:56:26 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,18 @@ void				ft_print_str(t_printf *f)
 
 	if (!(res = va_arg(f->avs, char*)))
 		res = "(null)";
+	length = ft_strlen(res);
 	if (f->precis >= 0)
 		res = ft_strndup(res, f->precis);
-	length = ft_strlen(res);
+	else
+		res = ft_strndup(res, length);
 	if (f->width > 0 && !f->fm)
 		(f->fz) ? ft_spacing('0', f, length) : ft_spacing(' ', f, length);
 	ft_putstr(res);
 	if (f->width > 0 && f->fm)
 		ft_spacing(' ', f, length);
 	f->len += length;
+	free(res);
 }
 
 void				ft_print_char(t_printf *f)

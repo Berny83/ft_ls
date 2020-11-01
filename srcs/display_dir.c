@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 20:32:30 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/31 19:53:19 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/02 00:29:36 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_argvs				*ft_get_content_dir(t_argvs *info_av, t_flags *fl)
 	DIR				*dirc;
 	struct dirent 	*entry;
 
-	new = initiate_argvs();
+	new = NULL;
 	if (!(dirc = opendir(info_av->path)))
 	{
 		ft_printf("ft_ls: cannot open directory '%s': Permission denied\n",\
@@ -89,7 +89,7 @@ t_argvs				*ft_get_content_dir(t_argvs *info_av, t_flags *fl)
 			if (!(content = initiate_argvs()))
 				return (NULL);
 			get_path_name(content, info_av->path, entry->d_name);
-			if (!new->name)
+			if (!new)
 				new = content;
 			else
 				tmp_con->next = content;
@@ -150,9 +150,14 @@ void				loopfol(t_argvs *curr, bool (*ft_sort)(t_argvs *), t_flags *fl, int ac)
 			}
 			head = head->next;
 			if (!head)
+			{
+				head = tmp;
+				free_list(head);
 				return ;
+			}
 		}
 	}
+	free_list(head);
 }
 
 void				display_dir(t_ls *doll)

@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 16:40:21 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/31 20:02:09 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/01 23:16:46 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,15 @@ static void			print_time(t_argvs *content)
 static void			print_hlnk(t_argvs *content, t_len *get_len)
 {
 	int				i;
+	char			*s;
 
 	i = get_len->len_hlnk;
 	write(1, "  ", 2);
-	while (i-- > (int)(ft_strlen(ft_itoa(content->info.hlnk))))
+	s = ft_itoa(content->info.hlnk);
+	while (i-- > (int)(ft_strlen(s)))
 		write(1, " ", 1);
 	ft_printf("%i", content->info.hlnk);
+	free(s);
 }
 
 static void			print_uname(t_argvs *content, t_len *get_len)
@@ -96,12 +99,15 @@ static void			print_gname(t_argvs *content, t_len *get_len)
 static void			print_size(t_argvs *content, t_len *get_len)
 {
 	int				i;
+	char			*s;
 
 	i = get_len->len_size;
+	s = ft_itoa(content->info.size);
 	write(1, "  ", 2);
-	while (i-- > (int)ft_strlen(ft_itoa(content->info.size)))
+	while (i-- > (int)ft_strlen(s))
 		write(1, " ", 1);
 	ft_printf("%i ", content->info.size);
+	free(s);
 }
 
 void				display_mode(t_argvs *content, t_len *get_len)

@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 17:53:25 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/31 20:10:15 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/01 23:25:52 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,25 @@ void		ls_error(int err)
 
 void		free_list(t_argvs *content_av)
 {
+	t_argvs	*tmp;
 	while (content_av)
 	{
-		content_av = content_av->next;
+		tmp = content_av->next;
 		free(content_av->path);
+		content_av->path = NULL;
 		free(content_av->name);
+		content_av->name = NULL;
+		free(content_av->info.uname);
+		content_av->info.uname = NULL;
+		free(content_av->info.gname);
+		content_av->info.gname = NULL;
 		free(content_av);
+		content_av = tmp;
 	}
 	free(content_av);
+}
+
+void		free_doll(t_ls *doll)
+{
+	free_list(doll->info_av);
 }

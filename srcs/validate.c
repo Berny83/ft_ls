@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 16:57:39 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/31 19:58:57 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/02 00:15:19 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void			parse_arguments(t_ls *doll)
 
 	if (!*doll->av)
 	{
+		if (!(doll->info_av = initiate_argvs()))
+			ls_error(0);
 		doll->info_av->name = ft_strdup(".");
 		doll->info_av->path = ft_strdup("./.");
 	}
@@ -88,7 +90,7 @@ void			parse_arguments(t_ls *doll)
 			if (!(avv = initiate_argvs()))
 				ls_error(0);
 			get_path_name(avv, ".", *doll->av);
-			if (!doll->info_av->name)
+			if (!doll->info_av)
 				doll->info_av = avv;
 			else
 				tmp_av->next = avv;

@@ -67,9 +67,9 @@ FT_LS
 +++multiple colums for -l  --- one more structure with max_len of path, name, etc + man tty ioctl
 +++makefile
 tests
-free
++++free
 norminette
-printf????
++++printf????
 
 tests:
 Files your and our differ
@@ -228,3 +228,14 @@ Error:		 ls -.r
 at-k5% ls -.r
 ls: illegal option -- .
 usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]
+
+01.11.20
++++leaks - free
+
+02.11.20
+ls: illegal option -- .
+usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]
+error_exit
+tests
+norminette
+check - printf???

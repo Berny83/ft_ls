@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 19:10:50 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/31 19:52:47 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/01 22:49:51 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,23 @@ static void			get_type_file(struct stat *file, t_argvs *within)
 {
 	int				len_sym;
 	
-	if ((file->st_mode & S_IFMT) == S_IFLNK)
+	if ((file->st_mode & __S_IFMT) == __S_IFLNK)
 	{
 		within->info.fruit.ilnk = 1;
 		if ((len_sym = readlink(within->path, within->info.sym, SYMSIZE)) != -1)
 			within->info.sym[len_sym] = '\0';
 	}
-	else if ((file->st_mode & S_IFMT) == S_IFSOCK)
+	else if ((file->st_mode & __S_IFMT) == __S_IFSOCK)
 		within->info.fruit.isck = 1;
-	else if ((file->st_mode & S_IFMT) == S_IFREG)
+	else if ((file->st_mode & __S_IFMT) == __S_IFREG)
 		within->info.fruit.ireg = 1;
-	else if ((file->st_mode & S_IFMT) == S_IFBLK)
+	else if ((file->st_mode & __S_IFMT) == __S_IFBLK)
 		within->info.fruit.iblk = 1;
-	else if ((file->st_mode & S_IFMT) == S_IFDIR)
+	else if ((file->st_mode & __S_IFMT) == __S_IFDIR)
 		within->info.fruit.idir = 1;
-	else if ((file->st_mode & S_IFMT) == S_IFCHR)
+	else if ((file->st_mode & __S_IFMT) == __S_IFCHR)
 		within->info.fruit.ichr = 1;
-	else if ((file->st_mode & S_IFMT) == S_IFIFO)
+	else if ((file->st_mode & __S_IFMT) == __S_IFIFO)
 		within->info.fruit.ifif = 1;
 }
 
@@ -44,11 +44,11 @@ static void			get_user_group_name(t_argvs *within, struct stat *file)
 	struct group	*grp;
 
 	if ((user = getpwuid(file->st_uid)))
-		within->info.uname = user->pw_name;
+		within->info.uname = ft_strdup(user->pw_name);
 	else
 		within->info.uname = ft_itoa_base(10, file->st_uid);
 	if ((grp = getgrgid(file->st_gid)))
-		within->info.gname = grp->gr_name;
+		within->info.gname = ft_strdup(grp->gr_name);
 	else
 		within->info.gname = ft_itoa_base(10, file->st_gid);
 }

@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 20:21:59 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/31 20:10:49 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/01 23:09:24 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,14 @@ t_len			initiate_len(void)
 void			get_max_len(t_argvs *curr, t_len *get_len)
 {
 	int			tmp;
+	char		*s;
 
 	tmp = 0;
 	while (curr)
 	{
-		tmp = ft_strlen(ft_itoa(curr->info.hlnk));
+		s = ft_itoa(curr->info.hlnk);
+		tmp = ft_strlen(s);
+		free(s);
 		if (get_len->len_hlnk < tmp)
 			get_len->len_hlnk = tmp;
 		tmp = ft_strlen(curr->info.uname);
@@ -40,7 +43,9 @@ void			get_max_len(t_argvs *curr, t_len *get_len)
 		tmp = ft_strlen(curr->info.gname);
 		if (get_len->len_gname < tmp)
 			get_len->len_gname = tmp;
-		tmp = ft_strlen(ft_itoa(curr->info.size));
+		s = ft_itoa(curr->info.size);
+		tmp = ft_strlen(s);
+		free(s);
 		if (get_len->len_size < tmp)
 			get_len->len_size = tmp;
 		tmp = ft_strlen(ctime(&curr->info.ltime_mod));
