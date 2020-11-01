@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 17:53:25 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/01 23:25:52 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/02 00:39:04 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,4 @@ void		free_list(t_argvs *content_av)
 		content_av = tmp;
 	}
 	free(content_av);
-}
-
-void		free_doll(t_ls *doll)
-{
-	free_list(doll->info_av);
 }

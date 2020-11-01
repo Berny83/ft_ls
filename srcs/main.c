@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:28:03 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/02 00:16:10 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/02 00:38:57 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,6 @@ static t_ls		initiate(int argc, char **argv)
 	ft_memset(&new, 0, sizeof(new));
 	new.ac = argc;
 	new.av = argv;
-	new.optns.l = 0;
-	new.optns.t = 0;
-	new.optns.a = 0;
-	new.optns.R = 0;
-	new.optns.r = 0;
-	new.info_av = NULL;
 	return (new);
 }
 
@@ -46,6 +40,6 @@ int				main(int argc, char **argv)
 	validate(&doll);
 	ft_ls(doll.info_av);
 	display_ls(&doll);
-	free_doll(&doll);
+	free_list(doll.info_av);
 	return (0);
 }

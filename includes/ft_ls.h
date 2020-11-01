@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:29:26 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/01 22:38:35 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/02 00:39:20 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ void				ft_print_content_dir(t_argvs *current, t_flags *fl);
 // -------------ls_error----------------
 void				ls_error(int err);
 void				free_list(t_argvs *content_av);
-void				free_doll(t_ls *doll);
 
 // -------------display_ls--------------
 void				display_mode(t_argvs *content, t_len *get_len);
