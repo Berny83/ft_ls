@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 12:02:49 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/05/23 14:34:39 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/02 16:43:13 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int			ft_check_fd(char **s, char **line, int fd, int ret)
 	{
 		*line = ft_strsub(s[fd], 0, len);
 		tmp = ft_strdup(s[fd] + len + 1);
-		free (s[fd]);
+		free(s[fd]);
 		s[fd] = tmp;
 		if (s[fd][0] == '\0')
 			ft_strdel(&s[fd]);
@@ -41,7 +41,7 @@ static int			ft_check_fd(char **s, char **line, int fd, int ret)
 
 int					get_next_line(const int fd, char **line)
 {
-	static char	*s[255];
+	static char		*s[255];
 	char			buf[BUFF_SIZE + 1];
 	char			*tmp;
 	int				ret;

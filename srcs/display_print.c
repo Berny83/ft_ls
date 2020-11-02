@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_lsl.c                                      :+:      :+:    :+:   */
+/*   display_print.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 16:40:21 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/01 23:16:46 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/02 16:45:54 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,66 +50,6 @@ static char			*gt_rigths(int i)
 	return ("---");
 }
 
-static void			print_time(t_argvs *content)
-{
-	char			*str_time;
-	time_t			time;
-
-	time = content->info.ltime_mod;
-	str_time = ctime(&time);
-	ft_printf("%.12s ", str_time + 4);
-}
-
-static void			print_hlnk(t_argvs *content, t_len *get_len)
-{
-	int				i;
-	char			*s;
-
-	i = get_len->len_hlnk;
-	write(1, "  ", 2);
-	s = ft_itoa(content->info.hlnk);
-	while (i-- > (int)(ft_strlen(s)))
-		write(1, " ", 1);
-	ft_printf("%i", content->info.hlnk);
-	free(s);
-}
-
-static void			print_uname(t_argvs *content, t_len *get_len)
-{
-	int				i;
-
-	i = get_len->len_uname;
-	write(1, " ", 1);
-	while (i-- > (int)ft_strlen(content->info.uname))
-		write(1, " ", 1);
-	ft_printf("%s", content->info.uname);
-}
-
-static void			print_gname(t_argvs *content, t_len *get_len)
-{
-	int				i;
-
-	i = get_len->len_gname;
-	write(1, "  ", 2);
-	while (i-- > (int)ft_strlen(content->info.gname))
-		write(1, " ", 1);
-	ft_printf("%s", content->info.gname);
-}
-
-static void			print_size(t_argvs *content, t_len *get_len)
-{
-	int				i;
-	char			*s;
-
-	i = get_len->len_size;
-	s = ft_itoa(content->info.size);
-	write(1, "  ", 2);
-	while (i-- > (int)ft_strlen(s))
-		write(1, " ", 1);
-	ft_printf("%i ", content->info.size);
-	free(s);
-}
-
 void				display_mode(t_argvs *content, t_len *get_len)
 {
 	char			*s;
@@ -119,7 +59,7 @@ void				display_mode(t_argvs *content, t_len *get_len)
 	ft_printf("%c", gt_type_file(content->info.fruit));
 	while (i--)
 	{
-		s = gt_rigths(((content->info.mode >> 3 * i) & 7)); //0 3 6 16bits, last 9 - user(rwx) group(rwx) other(rwx)
+		s = gt_rigths(((content->info.mode >> 3 * i) & 7));
 		ft_printf("%s", s);
 	}
 	print_hlnk(content, get_len);
@@ -130,4 +70,5 @@ void				display_mode(t_argvs *content, t_len *get_len)
 	ft_printf("%s", content->name);
 	if (content->info.fruit.ilnk)
 		ft_printf(" -> %s", content->info.sym);
+	ft_printf("\n");
 }

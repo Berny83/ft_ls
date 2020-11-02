@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 16:57:39 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/02 00:15:19 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/02 16:04:24 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,24 @@
 
 static void		get_options(char c, t_ls *doll)
 {
-	if (c == '-')
+	if (ft_strchr(FLAGGS, c))
 	{
-		free(doll);
-		ls_error(1);
+		if (c == 'l')
+			doll->optns.l = 1;
+		else if (c == 'R')
+			doll->optns.up_r = 1;
+		else if (c == 'a')
+			doll->optns.a = 1;
+		else if (c == 'r')
+			doll->optns.r = 1;
+		else if (c == 't')
+			doll->optns.t = 1;
 	}
-	else if (c == 'l')
-		doll->optns.l = 1;
-	else if (c == 'R')
-		doll->optns.R = 1;
-	else if (c == 'a')
-		doll->optns.a = 1;
-	else if (c == 'r')
-		doll->optns.r = 1;
-	else if (c == 't')
-		doll->optns.t = 1;
+	else
+	{
+		ft_printf("ft_ls: illegal option -- %c\n", c);
+		ls_error(0);
+	}
 }
 
 static int		parse_options(t_ls *doll)
@@ -79,7 +82,7 @@ void			parse_arguments(t_ls *doll)
 	if (!*doll->av)
 	{
 		if (!(doll->info_av = initiate_argvs()))
-			ls_error(0);
+			ls_error(1);
 		doll->info_av->name = ft_strdup(".");
 		doll->info_av->path = ft_strdup("./.");
 	}
@@ -88,7 +91,7 @@ void			parse_arguments(t_ls *doll)
 		while (*doll->av)
 		{
 			if (!(avv = initiate_argvs()))
-				ls_error(0);
+				ls_error(1);
 			get_path_name(avv, ".", *doll->av);
 			if (!doll->info_av)
 				doll->info_av = avv;

@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 17:19:32 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/09/01 18:52:26 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/02 16:22:40 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int					ft_toupper(int c);
 int					get_next_line(const int fd, char **line);
 int					ft_countwords(char const *s, char c);
 int					ft_atoi_base(const char *str, int base);
-//after ft_printf
 char				*ft_strndup(const char *s1, int count);
 char				*ft_itoa_base(int value, int base);
 char				*ft_itoa_base_address16(unsigned long num);
@@ -103,6 +102,5 @@ char				*ft_itoa_base_ll(long long num, int base);
 char				*ft_itoa_base_ll_pos(long long num, int base);
 char				*ftbaseull(unsigned long long num, int base, char c);
 void				ft_putunbr(unsigned long long n);
-//73 functions
 
 #endif

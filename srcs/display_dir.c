@@ -6,156 +6,79 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 20:32:30 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/02 00:29:36 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/02 18:20:06 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void			ft_print_total(t_argvs *current)
+void				loop_up_r(t_argvs *head, bool (*ft_sort)(t_argvs *),\
+t_flags *fl, int ac)
 {
-	int				tog;
+	t_argvs			*tmp;
 
-	tog = 0;
-	while (current)
+	tmp = head;
+	while (head)
 	{
-		tog += current->total;
-		current = current->next;
+		if (head->info.fruit.idir && ft_strcmp(head->name, ".") && \
+		ft_strcmp(head->name, ".."))
+			loop(head, ft_sort, fl, ac);
+		head = head->next;
 	}
-	ft_printf("total %i\n", tog);
 }
 
-void				ft_print_content_dir(t_argvs *current, t_flags *fl)
+void				header(t_argvs *curr, t_argvs *head, t_flags *fl)
 {
-	t_len		get_len;
-	t_argvs		*head;
+	char			di;
+	t_argvs			*tmp;
 
-	get_len = initiate_len();
-	head = current;
-	get_max_len(current, &get_len);
-	current = head;
-	if (fl->l)
-		ft_print_total(current);
-	while (current)
+	di = -2;
+	tmp = head;
+	while (head)
 	{
-		if (!current->not_exist)
+		if (head->info.fruit.idir)
 		{
-			if (!fl->l)
-			{
-				if (current->name[0] == '.' && fl->a)
-					ft_printf("%s\n", current->name);
-				else if (current->name[0] != '.')
-					ft_printf("%s\n", current->name);
-			}
-			else if (fl->l)
-			{
-				if (current->name[0] == '.' && fl->a)
-				{
-					display_mode(current, &get_len);
-					ft_printf("\n");
-				}
-				else if (current->name[0] != '.')
-				{
-					display_mode(current, &get_len);
-					ft_printf("\n");
-				}
-			}
+			di++;
+			if (di > 0 && fl->a)
+				break ;
+			else if (!fl->a && di > -2)
+				break ;
 		}
-		current = current->next;
+		head = head->next;
 	}
+	head = tmp;
+	if (curr->info.one && head->info.not_exist)
+		return ;
+	else if (curr->info.one && ((di > 0 && fl->a) \
+	|| (di > -1 && !fl->a)))
+		ft_printf("%s:\n", curr->path + 2);
+	else if (!curr->info.one)
+		ft_printf("\n%s:\n", curr->path + 2);
 }
 
-t_argvs				*ft_get_content_dir(t_argvs *info_av, t_flags *fl)
-{
-	t_argvs			*content;
-	t_argvs			*tmp_con;
-	t_argvs			*new;
-	DIR				*dirc;
-	struct dirent 	*entry;
-
-	new = NULL;
-	if (!(dirc = opendir(info_av->path)))
-	{
-		ft_printf("ft_ls: cannot open directory '%s': Permission denied\n",\
-		info_av->path);
-		return (NULL);
-	}
-	while ((entry = readdir(dirc)))
-	{
-		if ((fl->a && ft_strcmp(entry->d_name, ".") && \
-		ft_strcmp(entry->d_name, "..")) ||\
-		(fl->a && entry->d_name[0] == '.') || (entry->d_name[0] != '.'))
-		{
-			if (!(content = initiate_argvs()))
-				return (NULL);
-			get_path_name(content, info_av->path, entry->d_name);
-			if (!new)
-				new = content;
-			else
-				tmp_con->next = content;
-			tmp_con = content;
-		}
-	}
-	closedir(dirc);
-	return(new);
-}
-
-void				loopfol(t_argvs *curr, bool (*ft_sort)(t_argvs *), t_flags *fl, int ac)
+void				loop(t_argvs *curr, bool (*ft_sort)(t_argvs *),\
+t_flags *fl, int ac)
 {
 	t_argvs			*head;
 	t_argvs			*tmp;
-	char			dirs;
 
-	dirs = -2;
 	if (!(head = ft_get_content_dir(curr, fl)))
 		return ;
 	ft_ls(head);
 	tmp = head;
-	if ((ac > 1 && !fl->R) || (fl->R))
-	{
-		while (head)
-		{
-			if (head->info.fruit.idir)
-			{
-				dirs++;
-				if (dirs > 0 && fl->a)
-					break ;
-				else if (!fl->a && dirs > -2)
-					break ;
-			}			
-			head = head->next;
-		}
-		head = tmp;
-		if (curr->info.one && head->not_exist)
-			return ;
-		else if (curr->info.one && ((dirs > 0 && fl->a) || (dirs > -2 && !fl->a)))
-			ft_printf("%s:\n", curr->path + 2);
-		else if (!curr->info.one)
-			ft_printf("\n%s:\n", curr->path + 2);
-	}
-	ft_sorting(ft_sort, head);
+	if ((ac > 1 && !fl->up_r) || (fl->up_r))
+		header(curr, head, fl);
+	sorting(ft_sort, head);
 	tmp = head;
-	if (!head->not_exist)
+	if (!head->info.not_exist)
 		ft_print_content_dir(head, fl);
 	curr->info.one = false;
-	if (fl->R)
+	if (fl->up_r)
 	{
 		head = tmp;
-		while (head->name)
-		{
-			if (head->info.fruit.idir && ft_strcmp(head->name, ".") && \
-			ft_strcmp(head->name, ".."))
-			{
-				loopfol(head, ft_sort, fl, ac);
-			}
-			head = head->next;
-			if (!head)
-			{
-				head = tmp;
-				free_list(head);
-				return ;
-			}
-		}
+		loop_up_r(head, ft_sort, fl, ac);
+		free_list(head);
+		return ;
 	}
 	free_list(head);
 }
@@ -168,8 +91,8 @@ void				display_dir(t_ls *doll)
 	curr->info.one = true;
 	while (curr)
 	{
-		if (!curr->not_exist && curr->info.fruit.idir)
-			loopfol(curr, doll->ft_sort, &doll->optns, doll->ac);
+		if (!curr->info.not_exist && curr->info.fruit.idir)
+			loop(curr, doll->ft_sort, &doll->optns, doll->ac);
 		curr = curr->next;
 	}
 }

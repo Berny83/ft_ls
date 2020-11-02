@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 16:17:55 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/01 22:06:22 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/02 16:30:18 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,9 @@ void			ft_ispacing(char c, t_printf *f, int length)
 	}
 }
 
-// uintmax_t		ft_get_unum_modlen(t_printf *f)
-__uintmax_t		ft_get_unum_modlen(t_printf *f)
+uintmax_t		ft_get_unum_modlen(t_printf *f)
 {
-	// uintmax_t	num;
-	__uintmax_t	num;
+	uintmax_t	num;
 
 	if (f->convs == 'U')
 		num = (unsigned long)va_arg(f->avs, unsigned long int);
@@ -56,12 +54,12 @@ __uintmax_t		ft_get_unum_modlen(t_printf *f)
 		num = (unsigned long)va_arg(f->avs, unsigned long int);
 	else if (ft_strcmp(f->modln, "j") == 0 || \
 	ft_strcmp(f->modln, "jz") == 0 || ft_strcmp(f->modln, "jh") == 0)
-		num = (__uintmax_t)va_arg(f->avs, __uintmax_t);
+		num = (uintmax_t)va_arg(f->avs, uintmax_t);
 	else if (ft_strcmp(f->modln, "z") == 0)
 		num = (size_t)va_arg(f->avs, size_t);
 	else
 		num = (unsigned int)va_arg(f->avs, unsigned int);
-	num = (__uintmax_t)num;
+	num = (uintmax_t)num;
 	return (num);
 }
 
@@ -89,11 +87,9 @@ t_printf		*get_conversion(t_printf *f)
 	return (f);
 }
 
-// intmax_t		ft_get_num_modlen(t_printf *f)
-__intmax_t		ft_get_num_modlen(t_printf *f)
+intmax_t		ft_get_num_modlen(t_printf *f)
 {
-	// intmax_t	num;
-	__intmax_t	num;
+	intmax_t	num;
 
 	if (ft_strcmp(f->modln, "hh") == 0)
 		num = (signed char)va_arg(f->avs, int);
@@ -105,12 +101,12 @@ __intmax_t		ft_get_num_modlen(t_printf *f)
 		num = (long)va_arg(f->avs, long int);
 	else if (ft_strcmp(f->modln, "j") == 0 || \
 	ft_strcmp(f->modln, "jz") == 0 || ft_strcmp(f->modln, "jh") == 0)
-		num = (__intmax_t)va_arg(f->avs, __intmax_t);
+		num = (intmax_t)va_arg(f->avs, intmax_t);
 	else if (ft_strcmp(f->modln, "z") == 0 || ft_strcmp(f->modln, "zh") == 0)
 		num = (size_t)va_arg(f->avs, size_t);
 	else
 		num = (int)va_arg(f->avs, int);
-	num = (__intmax_t)num;
+	num = (intmax_t)num;
 	return (num);
 }
 

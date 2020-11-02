@@ -1,38 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort.c                                             :+:      :+:    :+:   */
+/*   sorting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 15:09:15 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/10/31 19:59:44 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/02 19:19:14 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void				ft_sorting(bool (*ft_sort)(t_argvs *), t_argvs *cur_struct)
+bool				check_alpha(t_argvs *current)
 {
-	t_argvs			*current;
-	t_argvs			*head;
-	int				all_sorted;
+	if (ft_strcmp(current->name, current->next->name) > 0)
+		return (true);
+	return (false);
+}
 
-	current = cur_struct;
-	head = current;
-	while (true)
-	{
-		current = head;
-		all_sorted = 1;
-		while (current && current->next)
-		{
-			if (ft_swap(ft_sort, current))
-				all_sorted = 0;
-			current = current->next;
-		}
-		if (all_sorted)
-			return ;
-	}
+bool				check_alpha_r(t_argvs *current)
+{
+	if (ft_strcmp(current->name, current->next->name) < 0)
+		return (true);
+	return (false);
+}
+
+bool				check_time(t_argvs *current)
+{
+	if ((current->info.ltime_mod - current->next->info.ltime_mod) < 0)
+		return (true);
+	return (false);
+}
+
+bool				check_time_r(t_argvs *current)
+{
+	if ((current->info.ltime_mod - current->next->info.ltime_mod) > 0)
+		return (true);
+	return (false);
 }
 
 void				flags_sort(t_ls *doll)
@@ -45,5 +50,5 @@ void				flags_sort(t_ls *doll)
 		doll->ft_sort = check_alpha_r;
 	else
 		doll->ft_sort = check_alpha;
-	ft_sorting(doll->ft_sort, doll->info_av);
+	sorting(doll->ft_sort, doll->info_av);
 }

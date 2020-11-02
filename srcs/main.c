@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:28:03 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/02 00:38:57 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/02 16:39:50 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_argvs			*initiate_argvs(void)
 int				main(int argc, char **argv)
 {
 	t_ls		doll;
-	
+
 	doll = initiate(argc, argv);
 	validate(&doll);
 	ft_ls(doll.info_av);

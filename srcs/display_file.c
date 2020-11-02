@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 20:21:59 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/01 23:09:24 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/02 17:01:58 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,25 @@ t_len			initiate_len(void)
 	return (new);
 }
 
+static int		string_toint(int nb)
+{
+	char		*s;
+	int			tmp;
+
+	s = ft_itoa(nb);
+	free(s);
+	tmp = ft_strlen(s);
+	return (tmp);
+}
+
 void			get_max_len(t_argvs *curr, t_len *get_len)
 {
 	int			tmp;
-	char		*s;
 
 	tmp = 0;
 	while (curr)
 	{
-		s = ft_itoa(curr->info.hlnk);
-		tmp = ft_strlen(s);
-		free(s);
+		tmp = string_toint(curr->info.hlnk);
 		if (get_len->len_hlnk < tmp)
 			get_len->len_hlnk = tmp;
 		tmp = ft_strlen(curr->info.uname);
@@ -43,9 +51,7 @@ void			get_max_len(t_argvs *curr, t_len *get_len)
 		tmp = ft_strlen(curr->info.gname);
 		if (get_len->len_gname < tmp)
 			get_len->len_gname = tmp;
-		s = ft_itoa(curr->info.size);
-		tmp = ft_strlen(s);
-		free(s);
+		tmp = string_toint(curr->info.size);
 		if (get_len->len_size < tmp)
 			get_len->len_size = tmp;
 		tmp = ft_strlen(ctime(&curr->info.ltime_mod));
@@ -74,15 +80,9 @@ void			ft_print_content(t_argvs *current, t_flags *fl)
 		get_max_len(current, &get_len);
 		current = head;
 		if (current->name[0] == '.' && fl->a)
-		{
 			display_mode(current, &get_len);
-			ft_printf("\n");
-		}
 		else if (current->name[0] != '.')
-		{
 			display_mode(current, &get_len);
-			ft_printf("\n");
-		}
 	}
 }
 
@@ -97,7 +97,7 @@ bool			display_file(t_ls *doll)
 	fl = doll->optns;
 	while (curr)
 	{
-		if (!curr->info.fruit.idir && !curr->not_exist)
+		if (!curr->info.fruit.idir && !curr->info.not_exist)
 		{
 			ft_print_content(curr, &fl);
 			done = true;

@@ -233,9 +233,32 @@ usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]
 +++leaks - free
 
 02.11.20
-ls: illegal option -- .
-usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]
-error_exit
+++ls: illegal option -- .
+++usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]
+++error_exit
 tests
-norminette
-check - printf???
+++norminette
+++check - printf???
+
+void				display_mode(t_argvs *content, t_len *get_len)
+{
+	char			*s;
+	int				i;
+
+	i = 3;
+	ft_printf("%c", gt_type_file(content->info.fruit));
+	while (i--)
+	{
+		s = gt_rigths(((content->info.mode >> 3 * i) & 7)); //0 3 6 16bits, last 9 - user(rwx) group(rwx) other(rwx)
+		ft_printf("%s", s);
+	}
+	print_hlnk(content, get_len);
+	print_uname(content, get_len);
+	print_gname(content, get_len);
+	print_size(content, get_len);
+	print_time(content);
+	ft_printf("%s", content->name);
+	if (content->info.fruit.ilnk)
+		ft_printf(" -> %s", content->info.sym);
+	ft_printf("\n");
+}

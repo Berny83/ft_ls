@@ -6,7 +6,7 @@
 #    By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/16 15:31:02 by aagrivan          #+#    #+#              #
-#    Updated: 2020/10/31 19:03:29 by aagrivan         ###   ########.fr        #
+#    Updated: 2020/11/02 17:12:44 by aagrivan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,15 @@ SRCS_DIR = srcs/
 SRCS =	main.c \
 		validate.c\
 		ft_ls.c\
-		sort.c\
+		sorting.c\
 		sort_ft.c\
 		ls_error.c\
 		display_dir.c\
+		display_dir_ftsupport.c\
 		display_file.c\
 		display_ls.c\
-		display_lsl.c\
+		display_print.c\
+		print.c\
 		display_no_file.c
 SRCS_P = $(addprefix $(SRCS_DIR),$(SRCS))
 
