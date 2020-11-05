@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:29:26 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/02 18:26:16 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/05 18:14:18 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct				s_argvs
 	char					*name;
 	t_data					info;
 	struct s_argvs			*next;
+	struct s_argvs			*prev;
 }							t_argvs;
 
 typedef struct				s_ls
@@ -120,5 +121,6 @@ void						print_hlnk(t_argvs *content, t_len *get_len);
 void						print_uname(t_argvs *content, t_len *get_len);
 void						print_gname(t_argvs *content, t_len *get_len);
 void						print_size(t_argvs *content, t_len *get_len);
+t_argvs						*reverse_time(t_argvs *pr);
 
 #endif

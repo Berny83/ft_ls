@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 15:09:15 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/02 19:19:14 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/05 17:52:43 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool				check_time(t_argvs *current)
 
 bool				check_time_r(t_argvs *current)
 {
-	if ((current->info.ltime_mod - current->next->info.ltime_mod) > 0)
+	if ((current->info.ltime_mod - current->next->info.ltime_mod) < 0)
 		return (true);
 	return (false);
 }

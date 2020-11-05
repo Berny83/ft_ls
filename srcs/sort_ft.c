@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 22:38:29 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/02 18:09:50 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/05 19:25:23 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void				sorting(bool (*ft_sort)(t_argvs *), t_argvs *curr)
 	head = current;
 	while (true)
 	{
-		current = head;
 		sorted = 1;
 		while (current && current->next)
 		{
@@ -56,7 +55,38 @@ void				sorting(bool (*ft_sort)(t_argvs *), t_argvs *curr)
 				sorted = 0;
 			current = current->next;
 		}
+		current = head;
 		if (sorted)
+		{
+			if (ft_sort == check_time_r)
+				reverse_time(current);
 			return ;
+		}
 	}
+}
+
+t_argvs				*reverse_time(t_argvs *curr)
+{
+	t_argvs			*head;
+	t_argvs			*tmp;
+	t_argvs			*last;
+	t_argvs			*new;
+
+	head = curr->next;
+	tmp = curr;
+	new = NULL;
+	while (head)
+	{
+		head->prev = tmp;
+		tmp = head;
+		new = head;
+		head = head->next;
+	}
+	while (tmp)
+	{
+		last = tmp;
+		last->next = tmp->prev;
+		tmp = tmp->prev;
+	}
+	return (curr);
 }
