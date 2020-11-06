@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 20:32:30 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/05 17:52:53 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/06 19:36:53 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,9 @@ t_flags *fl, int ac)
 	}
 }
 
-void				header(t_argvs *curr, t_argvs *head, t_flags *fl)
+void				header(t_argvs *curr)
 {
-	char			di;
-	t_argvs			*tmp;
-
-	di = -2;
-	tmp = head;
-	while (head)
-	{
-		if (head->info.fruit.idir)
-		{
-			di++;
-			if (di > 0 && fl->a)
-				break ;
-			else if (!fl->a && di > -2)
-				break ;
-		}
-		head = head->next;
-	}
-	head = tmp;
-	if (curr->info.one && head->info.not_exist)
-		return ;
-	else if (curr->info.one && ((di > 0 && fl->a) \
-	|| (di > -1 && !fl->a)))
+	if (curr->info.one && curr->next)
 		ft_printf("%s:\n", curr->path + 2);
 	else if (!curr->info.one)
 		ft_printf("\n%s:\n", curr->path + 2);
@@ -67,7 +46,7 @@ t_flags *fl, int ac)
 	ft_ls(head);
 	tmp = head;
 	if ((ac > 1 && !fl->up_r) || (fl->up_r))
-		header(curr, head, fl);
+		header(curr);
 	sorting(ft_sort, head);
 	tmp = head;
 	if (!head->info.not_exist)

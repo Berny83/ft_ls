@@ -11,8 +11,8 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/ft_ls",
-			// "args": ["-l", "-r", "-R", "rt"],
-			"args": ["-trla", "rt"],
+			// "args": ["-l", "-r", "-R", "rt"], "../FDF/.git/refs/tags"
+			"args": ["-la", "Instructions", "author", "op"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
 			"environment": [],

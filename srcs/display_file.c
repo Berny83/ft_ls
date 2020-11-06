@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 20:21:59 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/02 17:01:58 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/06 19:45:58 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,8 @@ void			get_max_len(t_argvs *curr, t_len *get_len)
 	}
 }
 
-void			ft_print_content(t_argvs *current, t_flags *fl)
+void			ft_print_content(t_argvs *current, t_flags *fl, t_len *get_len)
 {
-	t_len		get_len;
-	t_argvs		*head;
-
-	get_len = initiate_len();
-	head = current;
 	if (!fl->l)
 	{
 		if (current->name[0] == '.' && fl->a)
@@ -77,12 +72,10 @@ void			ft_print_content(t_argvs *current, t_flags *fl)
 	}
 	else if (fl->l)
 	{
-		get_max_len(current, &get_len);
-		current = head;
 		if (current->name[0] == '.' && fl->a)
-			display_mode(current, &get_len);
+			display_mode(current, get_len);
 		else if (current->name[0] != '.')
-			display_mode(current, &get_len);
+			display_mode(current, get_len);
 	}
 }
 
@@ -90,19 +83,25 @@ bool			display_file(t_ls *doll)
 {
 	t_argvs		*curr;
 	t_flags		fl;
-	bool		done;
+	bool		done[2];
+	t_len		get_len;
 
-	done = false;
+	done[0] = false;
+	done[1] = false;
+	get_len = initiate_len();
 	curr = doll->info_av;
+	get_max_len(doll->info_av, &get_len);
 	fl = doll->optns;
 	while (curr)
 	{
 		if (!curr->info.fruit.idir && !curr->info.not_exist)
 		{
-			ft_print_content(curr, &fl);
-			done = true;
+			ft_print_content(curr, &fl, &get_len);
+			done[0] = true;
 		}
+		else if (curr->info.fruit.idir)
+			done[1] = true;
 		curr = curr->next;
 	}
-	return ((done) ? true : false);
+	return ((done[0] && done[1]) ? true : false);
 }

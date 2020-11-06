@@ -6,7 +6,7 @@
 #    By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/16 15:31:02 by aagrivan          #+#    #+#              #
-#    Updated: 2020/11/02 17:12:44 by aagrivan         ###   ########.fr        #
+#    Updated: 2020/11/06 17:09:09 by aagrivan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ_P)
 	@make -C $(LIBFT)
-	$(CC) $(FLAGS) $(OBJ_P) $(LFLAGS) -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ_P) $(LFLAGS) -o $(NAME)
 
 $(OBJDIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(OBJDIR)

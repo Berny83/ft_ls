@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 16:57:39 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/02 16:04:24 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/06 18:21:10 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,16 @@ static int		parse_options(t_ls *doll)
 		if (**doll->av == '-')
 		{
 			(*doll->av)++;
+			if (!**doll->av)
+				return (count_av);
 			count_av++;
 		}
 		else
 			return (count_av);
 		while (**doll->av)
 		{
+			if (**doll->av == '-')
+				return (count_av);
 			get_options(**doll->av, doll);
 			(*doll->av)++;
 		}
@@ -66,7 +70,8 @@ t_argvs			*get_path_name(t_argvs *avv, char *path, char *nam)
 		ls_error(0);
 	if (!(route = ft_strnew(ft_strlen(path) + ft_strlen(nam) + 1)))
 		ls_error(0);
-	route = ft_strcpy(route, path);
+	if (nam[0] != '/')
+		route = ft_strcpy(route, path);
 	if (route[ft_strlen(route) - 1] != '/')
 		route = ft_strcat(route, "/");
 	route = ft_strcat(route, nam);
@@ -111,7 +116,7 @@ void			validate(t_ls *doll)
 	doll->av++;
 	if (doll->ac > 1)
 	{
-		if (**doll->av == '-')
+		if (*doll->av[0] == '-')
 			count += parse_options(doll);
 	}
 	doll->ac -= count;

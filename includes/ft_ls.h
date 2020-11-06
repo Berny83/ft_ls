@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:29:26 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/05 18:14:18 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/06 19:47:08 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ bool						check_time(t_argvs *current);
 bool						check_time_r(t_argvs *current);
 void						display_no_file(t_ls *doll);
 bool						display_file(t_ls *doll);
-void						ft_print_content(t_argvs *current, t_flags *fl);
+void						ft_print_content(t_argvs *current,\
+t_flags *fl, t_len *get_len);
 void						display_dir(t_ls *doll);
 void						loop(t_argvs *cur, bool (*ft_sort)(t_argvs *),\
 t_flags *fl, int ac);
@@ -109,7 +110,7 @@ bool (*ft_sort)(t_argvs *), t_flags *fl, int ac);
 t_argvs						*ft_get_content_dir(t_argvs *info_av, t_flags *fl);
 t_argvs						*rentry(t_argvs *info, t_argvs *new, \
 t_flags *fl, DIR *dirc);
-void						header(t_argvs *curr, t_argvs *head, t_flags *fl);
+void						header(t_argvs *curr);
 void						ft_print_content_dir(t_argvs *current, t_flags *fl);
 void						ls_error(int err);
 void						free_list(t_argvs *content_av);
@@ -122,5 +123,7 @@ void						print_uname(t_argvs *content, t_len *get_len);
 void						print_gname(t_argvs *content, t_len *get_len);
 void						print_size(t_argvs *content, t_len *get_len);
 t_argvs						*reverse_time(t_argvs *pr);
+t_argvs						*tmp_reverse(t_argvs *tmp, t_argvs *new,\
+t_argvs *hd, t_argvs *lst);
 
 #endif
