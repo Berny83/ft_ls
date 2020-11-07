@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 20:32:30 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/06 19:36:53 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/07 13:19:16 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ t_flags *fl, int ac)
 void				header(t_argvs *curr)
 {
 	if (curr->info.one && curr->next)
+		ft_printf("%s:\n", curr->path + 2);
+	else if (curr->info.one && !curr->next && curr->info.not)
 		ft_printf("%s:\n", curr->path + 2);
 	else if (!curr->info.one)
 		ft_printf("\n%s:\n", curr->path + 2);
@@ -65,13 +67,23 @@ t_flags *fl, int ac)
 void				display_dir(t_ls *doll)
 {
 	t_argvs			*curr;
+	bool			first;
 
 	curr = doll->info_av;
-	curr->info.one = true;
+	first = false;
 	while (curr)
 	{
 		if (!curr->info.not_exist && curr->info.fruit.idir)
+		{
+			if (!first)
+			{
+				curr->info.one = true;
+				first = true;
+			}
+			if (doll->not_dir)
+				curr->info.not = 1;
 			loop(curr, doll->ft_sort, &doll->optns, doll->ac);
+		}
 		curr = curr->next;
 	}
 }

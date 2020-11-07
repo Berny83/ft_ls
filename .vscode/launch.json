@@ -12,7 +12,7 @@
 			"request": "launch",
 			"program": "${workspaceFolder}/ft_ls",
 			// "args": ["-l", "-r", "-R", "rt"], "../FDF/.git/refs/tags"
-			"args": ["-la", "Instructions", "author", "op"],
+			"args": ["-latr", "Makefile", "Instructions", "srcs"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
 			"environment": [],

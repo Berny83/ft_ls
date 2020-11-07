@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 20:21:59 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/06 19:45:58 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/07 13:12:40 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void			get_max_len(t_argvs *curr, t_len *get_len)
 	int			tmp;
 
 	tmp = 0;
-	while (curr)
+	while (curr && !curr->info.not_exist)
 	{
 		tmp = string_toint(curr->info.hlnk);
 		if (get_len->len_hlnk < tmp)
@@ -88,8 +88,8 @@ bool			display_file(t_ls *doll)
 
 	done[0] = false;
 	done[1] = false;
-	get_len = initiate_len();
 	curr = doll->info_av;
+	get_len = initiate_len();
 	get_max_len(doll->info_av, &get_len);
 	fl = doll->optns;
 	while (curr)
@@ -97,11 +97,13 @@ bool			display_file(t_ls *doll)
 		if (!curr->info.fruit.idir && !curr->info.not_exist)
 		{
 			ft_print_content(curr, &fl, &get_len);
+			doll->not_dir = curr;
 			done[0] = true;
 		}
 		else if (curr->info.fruit.idir)
 			done[1] = true;
 		curr = curr->next;
 	}
+	(!fl.l && !done[1]) ? ft_printf("\n") : 0;
 	return ((done[0] && done[1]) ? true : false);
 }

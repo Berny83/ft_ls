@@ -6,7 +6,7 @@
 /*   By: aagrivan <aagrivan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 15:29:26 by aagrivan          #+#    #+#             */
-/*   Updated: 2020/11/06 19:47:08 by aagrivan         ###   ########.fr       */
+/*   Updated: 2020/11/07 12:27:57 by aagrivan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct				s_data
 	char					sym[SYMSIZE + 1];
 	bool					one;
 	unsigned char			not_exist: 1;
+	unsigned char			not: 1;
 }							t_data;
 
 typedef struct				s_argvs
@@ -73,6 +74,7 @@ typedef struct				s_ls
 	char					**av;
 	t_flags					optns;
 	t_argvs					*info_av;
+	t_argvs					*not_dir;
 	bool					(*ft_sort)(t_argvs *mp);
 }							t_ls;
 
